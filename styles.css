@@ -1,0 +1,97 @@
+*
+
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins', sans-serif;
+    box-sizing: border-box;
+
+}
+
+    .container{
+        width: 100vw;
+        height: 100vh;
+        background-image: url(./images/Sky.jpg);
+        background-position: center;
+        background-size: cover;
+        padding: 0 8%;
+
+    }
+
+
+    .logo{
+        width: 400px;
+        position: absolute;
+        padding: none;
+        cursor: pointer;
+
+    }
+        
+    .content{
+        top: 60%;
+        position: absolute;
+        transform: translateY(-50%);
+        color: #ffffff;
+
+    }
+    
+    .content h1{
+        font-size: 80px;
+        font-weight: 600%;
+
+    }
+
+    .content h1 span{
+        color: #fe0000;
+
+    }
+    .content button{
+        background: none;
+        border: 2px solid #ffffff;
+        border-radius: 8px;
+        outline: none;
+        padding: 12px 25px;
+        color: #ffffff;
+
+    }
+
+    .launch-time{
+        display: flex;
+    }
+    
+    .launch-time div{
+        flex-basis: 100px;
+    }
+    
+    .launch-time p{
+        font-size: 60px;
+    }
+
+    .rocket{
+        width: 250px;
+        position:absolute;
+        right: 10%;
+        bottom: 0;
+        animation: rocket 4s linear infinite;
+
+    }
+
+    @keyframes rocket{
+        0%{
+            bottom: 0;
+            opacity: 0;
+        }
+
+    100%{
+            bottom: 105%;
+            opacity: 1;
+
+    }
+
+
+    }
+
+    
+
+
+    
