@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = htmlspecialchars($_POST['message']);
     
     // Define the recipient email address
-    $to = "youremail@example.com";
+    $to = "ddbyalfonzo@gmail.com";
     $subject = "New message from $name";
 
     // Create the email content
