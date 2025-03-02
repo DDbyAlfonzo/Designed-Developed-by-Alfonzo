@@ -815,7 +815,7 @@ body {
 .carousel-slide {
     flex: 0 0 auto;
     width: 200px;
-    margin: 0 15px;
+    margin: 0 0px;
     text-align: center;
 }
 
