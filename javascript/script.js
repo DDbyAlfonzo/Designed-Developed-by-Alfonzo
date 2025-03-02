@@ -100,3 +100,23 @@ document.addEventListener('DOMContentLoaded', () => {
     heading.style.animation = 'fadeInGrow 2s ease-out forwards';
   });
   
+
+// Brands I've worked with
+document.addEventListener("DOMContentLoaded", function () {
+    const carouselWrapper = document.querySelector('.carousel-wrapper');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+
+    // Function to move the carousel
+    function moveCarousel() {
+        const offset = -currentIndex * (slides[0].offsetWidth + 30); // Slide width + margin
+        carouselWrapper.style.transform = `translateX(${offset}px)`;
+    }
+
+    // Auto-loop functionality
+    setInterval(() => {
+        currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
+        moveCarousel();
+    }, 3000); // Move every 3 seconds
+});
