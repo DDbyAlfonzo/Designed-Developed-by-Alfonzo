@@ -354,6 +354,7 @@
 </section>
 
 <!-- Contact Section -->
+ 
 <section id="contact" class="contact-section">
     <div class="contact-form-container">
         <!-- Logo inside the form container -->
@@ -365,7 +366,7 @@
             <p>We'd love to hear from you.<br>Please drop a message and we'll get back to you shortly.</p>
         </div>
 
-        <form id="contact-form" action="./sendmailphp/sendemail.php" method="POST">
+        <form id="contact-form" action="mailto:ddbyalfonzo@gmail.com" method="POST">
             <div class="form-group">
                 <label for="name">Your name</label>
                 <input type="text" id="name" name="name" required placeholder="Enter your name">
@@ -427,8 +428,9 @@
             responseMessage.innerHTML = "An error occurred. Please try again.";
             responseMessage.style.backgroundColor = "#F44336"; // Red color
         });
-    });
+    })
 </script>
+
 
 <!-- connect with us -->
 
@@ -445,6 +447,7 @@
         <i class="fab fa-instagram social-icon"></i>
       </a>
     </div>
+
   </section>
   
 
