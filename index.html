@@ -366,7 +366,8 @@
             <p>We'd love to hear from you.<br>Please drop a message and we'll get back to you shortly.</p>
         </div>
 
-        <form id="contact-form" action="mailto:ddbyalfonzo@gmail.com" method="POST">
+        <form id="contact-form" action="./sendmailphp/sendemail.php" method="POST">
+          <!--   <form action="mailto:someone@example.com" method="post" enctype="text/plain"></form>-->
             <div class="form-group">
                 <label for="name">Your name</label>
                 <input type="text" id="name" name="name" required placeholder="Enter your name">
@@ -393,7 +394,9 @@
 </form>
     </div>
 </section>
-<!--
+
+
+
 <script>
     // Handle form submission
     document.getElementById("contact-form").addEventListener("submit", function(event) {
@@ -417,8 +420,8 @@
                 form.reset(); // Reset form fields
             } else {
                 // Display error message
-                 responseMessage.innerHTML = "Sorry, something went wrong. Please try again later.";
-                responseMessage.style.backgroundColor = "#F44336"; // Red color 
+                responseMessage.innerHTML = "Sorry, something went wrong. Please try again later.";
+                responseMessage.style.backgroundColor = "#F44336"; // Red color
             }
         })
         .catch(error => {
@@ -427,7 +430,8 @@
             responseMessage.style.backgroundColor = "#F44336"; // Red color
         });
     })
-</script> -->
+</script>
+
 
 <!-- connect with us -->
 
@@ -446,6 +450,7 @@
     </div>
 
   </section>
+  
 
     <!-- Footer Section -->
     <footer>
