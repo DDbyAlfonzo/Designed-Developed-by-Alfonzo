@@ -1,478 +1,765 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Designed & Developed by Alfonzo</title>
-    <meta name="description" content="We create premium UX/UI designs, branding, animations, and websites tailored for impactful digital experiences.">
-    <meta name="keywords" content="UX design, UI design, web development, branding, animation, Designed & Developed by Alfonzo, user experience, user interface, website design, Johannesburg design studio">
-    <meta name="author" content="Designed & Developed by Alfonzo">
-    <meta property="og:title" content="Designed & Developed by Alfonzo">
-    <meta property="og:description" content="Explore custom digital design, UX/UI, branding, and animation services tailored to your business.">
-    <meta property="og:image" content="https://www.ddbyalfonzo.co.za/images/Realistic.Favicon48.png.png">
-    <meta property="og:url" content="https://www.ddbyalfonzo.co.za">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Designed & Developed by Alfonzo">
-    <meta name="twitter:description" content="Beautiful, functional web and brand design that drives business growth.">
-    <meta name="twitter:image" content="https://www.ddbyalfonzo.co.za/images/Realistic.Favicon48.png.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="canonical" href="https://www.ddbyalfonzo.co.za">
-    <link rel="stylesheet" href="./css/script.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<title>Designed & Developed by Alfonzo</title>
+<meta name="description" content="We create premium UX/UI designs, branding, animations, and websites tailored for impactful digital experiences.">
 
-    <!-- Favicon Setup -->
-    <link rel="icon" href="./images/Realistic.Favicon48.png.png" type="image/x-icon">
-    <link rel="icon" sizes="32x32" href="./images/Realistic.Favicon32.png.png">
-    <link rel="icon" sizes="16x16" href="./images/Realistic.Favicon16.png.png">
-    <link rel="icon" sizes="48x48" href="./images/Realistic.Favicon48.png.png">
-    <link rel="icon" href="./images/Realistic.Favicon48.png.png" sizes="180x180">
-    <link rel="icon" href="./images/Realistic.Favicon48.png.png" type="image/svg+xml">
+<link rel="canonical" href="https://www.ddbyalfonzo.co.za">
+
+<link rel="stylesheet" href="./css/script.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
+<style>
+:root {
+  --nav-height: 80px;
+}
+
+
+.hero-copy {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+
+/* === HERO TEXT ENTRANCE === */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.fade-up.delay-1 { animation-delay: 0.15s; }
+.fade-up.delay-2 { animation-delay: 0.3s; }
+.fade-up.delay-3 { animation-delay: 0.45s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.hero {
+  position: relative;
+  min-height: 150vh;
+  padding: calc(var(--nav-height) + 1rem) 6vw 6rem;
+  background: linear-gradient(145deg, #ff6f00, #ff4081);
+  overflow: hidden;
+  scroll-margin-top: var(--nav-height);
+}
+
+
+.hero-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:4rem;
+  align-items:center;
+}
+
+/* TEXT */
+
+.hero-copy h1{
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  line-height: 1.15;
+  margin: 0;
+  color: #333;
+}
+
+.hero-copy h1 em{
+  display:block;
+  font-style:italic;
+  color:#ffffff;
+}
+
+.hero-copy p{
+  margin-top:1.5rem;
+  max-width:520px;
+  font-weight:600;
+  color:#333;
+}
+
+.hero-copy .cta-button{
+  margin-top:2rem;
+  display:inline-block;
+}
+
+/* PHONE STAGE */
+.hero-stage{
+  position:relative;
+  height:520px;
+}
+
+/* PHONES */
+.hero-phone{
+  position:absolute;
+  width:240px;
+  aspect-ratio:9/19.5;
+  animation:float 3s ease-in-out infinite;
+}
+
+.hero-phone.b{animation-delay:1s}
+
+.hero-phone-shell{
+  position:absolute;
+  inset:0;
+  background:#0a0a0f;
+  border-radius:40px;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.06),
+    0 35px 80px rgba(0,0,0,.55);
+}
+
+.hero-phone-shell img{
+  width:calc(100% - 16px);
+  height:calc(100% - 16px);
+  margin:8px;
+  border-radius:32px;
+  object-fit:cover;
+}
+
+.hero-phone-shell::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(
+    120deg,
+    rgba(255,255,255,.35),
+    rgba(255,255,255,.1) 40%,
+    transparent 65%
+  );
+  opacity:.25;
+}
+
+/* === PHONE TILT === */
+@media (hover: hover) and (pointer: fine) {
+  .hero-phone {
+    transition: transform 0.25s ease-out;
+    will-change: transform;
+  }
+}
+
+.hero-phone-tilt{
+  width:100%;
+  height:100%;
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+
+
+
+/* DESKTOP POSITIONS */
+.hero-phone.a{left:0;top:28%}
+.hero-phone.b{left:28%;top:6%}
+
+@keyframes float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-14px)}
+  100%{transform:translateY(0)}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.hero-copy {
+  padding-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+
+/* ================= MOBILE HERO FINAL FIX ================= */
+@media (max-width: 900px) {
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2.5rem;
+}
+
+.hero-copy {
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-copy h1 {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.hero-copy p {
+  max-width: 90%;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.hero-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.hero-phone {
+  position: relative !important;
+  width: 185px;
+}
+
+.hero-phone.a {
+  z-index: 2;
+  margin-left: -60px;
+}
+
+.hero-phone.b {
+  margin-left: -130px;
+  z-index: 1;
+}
+}
+
+@media (max-width: 900px) {
+  :root {
+    --nav-height: 104px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-stage {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-copy p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-copy h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-copy {
+    padding-top: 1.75rem;
+  }
+
+  .hero-copy h1 {
+    line-height: 1.2;
+  }
+}
+
+</style>
 </head>
-<body>
-<body>
 
+<body>
 <!-- Top Navigation -->
 <nav class="navbar">
-    <div class="logo">
-        <a href="#"><img src="./images/Realistic.Favicon48.png.png" alt="Company Logo"></a>
-    </div>
+  <div class="logo">
+      <a href="#"><img src="./images/Realistic.Favicon48.png.png" alt="Company Logo"></a>
+  </div>
 
-    <div class="hamburger-menu" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+  <div class="hamburger-menu" id="hamburger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+  </div>
 
-    <ul class="nav-links" id="nav-links">
-        <li><a href="#services">About Us</a></li>
-        <li><a href="#portfolio">Our Work</a></li>
-        <li><a href="#contact-form">Contact</a></li>
-    </ul>
+  <ul class="nav-links" id="nav-links">
+      <li><a href="#services">About Us</a></li>
+      <li><a href="#portfolio">Our Work</a></li>
+      <li><a href="#contact-form">Contact</a></li>
+  </ul>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-    <!-- Video Background -->
-    <div class="video-background">
-        <video autoplay loop muted playsinline>
-            <source src="./vids/Header video.mp4" type="video/mp4">
-            <source src="https://www.pexels.com/video/a-neon-light-show-in-the-dark-5680034/.webm" type="video/webm">
-            Your browser does not support the video tag.
-        </video>
-    </div>
+  <div class="hero-inner">
 
-    <div class="hero-content">  
-        <h1 id="animated-heading">Welcome to <br>Designed & Developed By Alfonzo</h1>
-        <p>We specialise in creating brands and web experiences that are not only beautiful <br>but also user-friendly. 
-            <br>With a focus on intuitive UX/UI design and seamless development, <br>we make sure your digital presence is both engaging and easy to use. 
-            <br>Let’s create something amazing together!
-
-        </p>
-        <a href="#services" class="cta-button">Find out more</a>
-    </div>
-</section>
-
-    <!-- Services Section -->
-    <section id="services" class="section">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div class="services">
-                <div class="service">
-                    <h3>Brand Identity</h3>
-                    <p>We are passionate about creating digital solutions that empower businesses to thrive online. 
-                        Our brand is built on innovation, quality, and collaboration, 
-                        delivering custom websites and designs that reflect your unique vision and drive measurable results.</p>
-                </div>
-                <div class="service">
-                    <h3>UX / UI Design</h3>
-                    <p>We design visually stunning, user-friendly websites that help your business shine online. 
-                        With a focus on clean design and seamless functionality, 
-                        we create tailored digital experiences that engage visitors and drive results.</p>
-                </div>
-                <div class="service">
-                    <h3>Other offerings</h3>
-                    <p>We bring your ideas to life through a blend of animation, graphic design, and web development. 
-                        From captivating animations to stunning visuals and high-performance websites, we create seamless, 
-                        engaging digital experiences that elevate your brand and connect with your audience.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
- <!-- Portfolio -->
- <section id="portfolio" class="funky-portfolio">
-    <div class="container">
-        <h3 class="funky-heading">SOME OF OUR WORK</h3>
-        <div class="portfolio-items">
-            <!-- Portfolio Item 1 -->
-            <div class="portfolio-item" data-modal="modal1">
-                <img src="./images/ABSA.png" alt="Project 1">
-                <h3>ABSA</h3>
-                <p>Tax Reporting Tool designed to facilitate the fight against tax evasion.</p>
-            </div>
-
-            <!-- Portfolio Item 2 -->
-            <div class="portfolio-item" data-modal="modal2">
-                <img src="./images/Capitec 2.de609f50 (1).png" alt="Project 2">
-                <h3>Capitec W.A.R.M</h3>
-                <p>A PWA (Progressive Web Application) that allows for quick and easy communication.</p>
-            </div>
-
-            <!-- Portfolio Item 3 -->
-            <div class="portfolio-item" data-modal="modal3">
-                <img src="./images/FNB mock up.jpg" alt="Project 3">
-                <h3>FNB</h3>
-                <p>Effortlessly renew your vehicle licence, buy or sell a vehicle, all through the trusted FNB app under "nav Car".</p>
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
-        <div class="container">
-            <div class="portfolio-items">
-                <!-- Portfolio Item 4 -->
-                <div class="portfolio-item" data-modal="modal4">
-                    <img src="./images/Discovery 3.jpg" alt="Project 4">
-                    <h3>Discovery - Vitality</h3>
-                    <p>Vitality is a behaviour change platform that guides and motivates individuals toward improved health through incentives.</p>
-                </div>
+    <div class="hero-copy">
+      <h1 class="fade-up delay-1">
+        Welcome to<br>
+        <em>Designed &amp; Developed by Alfonzo</em>
+      </h1>
     
-                <!-- Portfolio Item 5 -->
-                <div class="portfolio-item" data-modal="modal5">
-                    <img src="./images/VikelaWebsite.png" alt="Project 5">
-                    <h3>Vikela Website</h3>
-                    <p>The Vikela website allows users to customise their own unique safe, enquire about Vikela products, and access the Vikela Tech portal.</p> <br>
-                </div>
+      <p class="fade-up delay-2">
+        We specialise in creating brands and web experiences that are not only
+        beautiful but also user-friendly. With intuitive UX/UI design and seamless
+        development, we help your digital presence stand out.
+      </p>
     
-                <!-- Portfolio Item 6 -->
-                <div class="portfolio-item" data-modal="modal6">
-                    <img src="./images/Vikela Portal Header.png" alt="Project 6">
-                    <h3>Vikela web portal</h3>
-                    <p>A centralised platform where users can monitor the status of their smart safe and its contents.</p><br>
-                </div>
-            </div>
-        </div>
-    <br>
-    <br>
-            <div class="container">
-                <div class="portfolio-items">
-                    <!-- Portfolio Item 7 -->
-                    <div class="portfolio-item" data-modal="modal7">
-                        <img src="./images/Huawei 1.d0d8ab62.png" alt="Project 7">
-                        <h3>Huawei tracking system</h3>
-                        <p>Mining tracking and monitoring system.</p>
-                    </div>
-        
-                    <!-- Portfolio Item 8 -->
-                    <div class="portfolio-item" data-modal="modal8">
-                        <img src="./images/Pro-Find 5.75170012.png" alt="Project 8">
-                        <h3>Pro-Find</h3>
-                        <p>A platform for job searching and posting.</p>
-                    </div>
-        
-                    <!-- Portfolio Item 9 -->
-                    <div class="portfolio-item" data-modal="modal9">
-                        <img src="./images/QSP header.png" alt="Project 9">
-                        <h3>Quick score pro</h3>
-                        <p>A user-friendly app to easily book and manage shooting range sessions and matches, 
-                            all in one place. Find top ranges, schedule your visits, and track your performance effortlessly.</p>
-                    </div>
-                </div>
-            </div>
-
-    <!-- Modal 1 -->
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <span class="close" data-modal="modal1">&times;</span>
-            <h3>ABSA</h3>
-            <p>Tax evasion is a global issue, and the Tax Reporting Tool aims to promote cooperation and information exchange between tax administrations to combat it.</p><br>
-            <img src="./images/Absa 2.56265507.png" alt="Project 1 Details">
-            <button class="next" data-next="modal2">Next</button>
-        </div>
+      <a href="#services" class="cta-button fade-up delay-3">Find out more</a>
     </div>
+    
 
-    <!-- Modal 2 -->
-    <div id="modal2" class="modal">
-        <div class="modal-content">
-            <span class="close" data-modal="modal2">&times;</span>
-            <h3>Capitec W.A.R.M</h3>
-            <p>WhatsApp for Relationship Managers is a Progressive Web Application (PWA) designed to streamline communication between Relationship Managers and their bankers. It enables Relationship Managers to efficiently close, refer, or escalate banker requests.</p>
-            <img src="./images/Capitec 2.de609f50.png" alt="Project 2 Details">
-            <button class="next" data-next="modal3">Next</button>
-        </div>
-    </div>
+    <div class="hero-stage">
 
-    <!-- Modal 3 -->
-    <div id="modal3" class="modal">
-        <div class="modal-content">
-            <span class="close" data-modal="modal3">&times;</span>
-            <h3>FNB</h3>
-            <p>nav Car on the FNB app allows users to buy and sell vehicles, renew licence discs plus track its delivery. You can pay for vehicle fines, and much more, <br>all in one convenient place.</p><br>
-            <img src="./images/FNB modal.jpg" alt="Project 3 Details">
-            <button class="next" data-next="modal4">Next</button>
+      <div class="hero-phone a">
+        <div class="hero-phone-tilt">
+          <div class="hero-phone-shell">
+            <img src="./images/FNB mock.png" alt="FNB App">
+          </div>
         </div>
+      </div>
+    
+      <div class="hero-phone b">
+        <div class="hero-phone-tilt">
+          <div class="hero-phone-shell">
+            <img src="./images/Mobile.png" alt="Vitality App">
+          </div>
+        </div>
+      </div>
+    
     </div>
-</section>
-</section>
+    
+
+  </div>
 </section>
 
- <!-- Modal 4 -->
- <div id="modal4" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="modal4">&times;</span>
-        <h3>Discovery - Vitality</h3>
-        <p>Discovery Vitality is a program designed to inspire healthier lifestyle choices by rewarding members for taking steps to improve their health.</p><br>
-        <img src="./images/Discovery.jpg" alt="Project 4 Details">
-        <button class="next" data-next="modal5">Next</button>
+
+  <!-- Services Section -->
+  <section id="services" class="section">
+      <div class="container">
+          <h2>Our Services</h2>
+          <div class="services">
+              <div class="service">
+                  <h3>Brand Identity</h3>
+                  <p>We are passionate about creating digital solutions that empower businesses to thrive online. 
+                      Our brand is built on innovation, quality, and collaboration, 
+                      delivering custom websites and designs that reflect your unique vision and drive measurable results.</p>
+              </div>
+              <div class="service">
+                  <h3>UX / UI Design</h3>
+                  <p>We design visually stunning, user-friendly websites that help your business shine online. 
+                      With a focus on clean design and seamless functionality, 
+                      we create tailored digital experiences that engage visitors and drive results.</p>
+              </div>
+              <div class="service">
+                  <h3>Other offerings</h3>
+                  <p>We bring your ideas to life through a blend of animation, graphic design, and web development. 
+                      From captivating animations to stunning visuals and high-performance websites, we create seamless, 
+                      engaging digital experiences that elevate your brand and connect with your audience.</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="funky-portfolio">
+
+  <div class="container">
+    <h3 class="funky-heading">SOME OF OUR WORK</h3>
+
+    <!-- ROW 1 -->
+    <div class="portfolio-items">
+      <div class="portfolio-item" data-modal="modal1">
+        <img src="./images/ABSA.png" alt="ABSA">
+        <h3>ABSA</h3>
+        <p>Tax Reporting Tool designed to facilitate the fight against tax evasion.</p>
+      </div>
+
+      <div class="portfolio-item" data-modal="modal2">
+        <img src="./images/Capitec 2.de609f50 (1).png" alt="Capitec">
+        <h3>Capitec W.A.R.M</h3>
+        <p>A Progressive Web Application for quick communication.</p>
+      </div>
+
+      <div class="portfolio-item" data-modal="modal3">
+        <img src="./images/FNB mock up.jpg" alt="FNB">
+        <h3>FNB</h3>
+        <p>Vehicle licence renewals, buying and selling via the FNB app.</p>
+      </div>
     </div>
+  </div>
+<br>
+<br>
+  <!-- ROW 2 -->
+  <div class="container">
+    <div class="portfolio-items">
+      <div class="portfolio-item" data-modal="modal4">
+        <img src="./images/Discovery 3.jpg" alt="Discovery">
+        <h3>Discovery – Vitality</h3>
+        <p>Behaviour-change platform rewarding healthier lifestyles.</p>
+      </div>
+
+      <div class="portfolio-item" data-modal="modal5">
+        <img src="./images/VikelaWebsite.png" alt="Vikela Website">
+        <h3>Vikela Website</h3>
+        <p>Custom smart-safe configuration platform.</p>
+      </div>
+
+      <div class="portfolio-item" data-modal="modal6">
+        <img src="./images/Vikela Portal Header.png" alt="Vikela Portal">
+        <h3>Vikela Web Portal</h3>
+        <p>Centralised smart-safe monitoring system.</p>
+      </div>
+    </div>
+  </div>
+<br>
+<br>
+  <!-- ROW 3 -->
+  <div class="container">
+    <div class="portfolio-items">
+      <div class="portfolio-item" data-modal="modal7">
+        <img src="./images/Huawei 1.d0d8ab62.png" alt="Huawei">
+        <h3>Huawei Tracking System</h3>
+        <p>Mining tracking and monitoring solution.</p>
+      </div>
+
+      <div class="portfolio-item" data-modal="modal8">
+        <img src="./images/Pro-Find 5.75170012.png" alt="Pro-Find">
+        <h3>Pro-Find</h3>
+        <p>Job searching and posting platform.</p>
+      </div>
+
+      <div class="portfolio-item" data-modal="modal9">
+        <img src="./images/QSP header.png" alt="Quick Score Pro">
+        <h3>Quick Score Pro</h3>
+        <p>Shooting range booking and score management app.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+  <!-- Modal 1 -->
+  <div id="modal1" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="modal1">&times;</span>
+          <h3>ABSA</h3>
+          <p>Tax evasion is a global issue, and the Tax Reporting Tool aims to promote cooperation and information exchange between tax administrations to combat it.</p><br>
+          <img src="./images/Absa 2.56265507.png" alt="Project 1 Details">
+          <button class="next" data-next="modal2">Next</button>
+      </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div id="modal2" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="modal2">&times;</span>
+          <h3>Capitec W.A.R.M</h3>
+          <p>WhatsApp for Relationship Managers is a Progressive Web Application (PWA) designed to streamline communication between Relationship Managers and their bankers. It enables Relationship Managers to efficiently close, refer, or escalate banker requests.</p>
+          <img src="./images/Capitec 2.de609f50.png" alt="Project 2 Details">
+          <button class="next" data-next="modal3">Next</button>
+      </div>
+  </div>
+
+  <!-- Modal 3 -->
+  <div id="modal3" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="modal3">&times;</span>
+          <h3>FNB</h3>
+          <p>nav Car on the FNB app allows users to buy and sell vehicles, renew licence discs plus track its delivery. You can pay for vehicle fines, and much more, <br>all in one convenient place.</p><br>
+          <img src="./images/FNB modal.jpg" alt="Project 3 Details">
+          <button class="next" data-next="modal4">Next</button>
+      </div>
+  </div>
+
+<!-- Modal 4 -->
+<div id="modal4" class="modal">
+  <div class="modal-content">
+      <span class="close" data-modal="modal4">&times;</span>
+      <h3>Discovery - Vitality</h3>
+      <p>Discovery Vitality is a program designed to inspire healthier lifestyle choices by rewarding members for taking steps to improve their health.</p><br>
+      <img src="./images/Discovery.jpg" alt="Project 4 Details">
+      <button class="next" data-next="modal5">Next</button>
+  </div>
 </div>
 
 <!-- Modal 5 -->
 <div id="modal5" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="modal5">&times;</span>
-        <h3>Vikela website</h3>
-        <p>A central platform where users can design, customise, and order their unique smart safe for various sectors.</p><br>
-        <img src="./images/VikelaWeb black 1.0ab9d5bb.png" alt="Project 5 Details">
-        <button class="next" data-next="modal6">Next</button>
-    </div>
+  <div class="modal-content">
+      <span class="close" data-modal="modal5">&times;</span>
+      <h3>Vikela website</h3>
+      <p>A central platform where users can design, customise, and order their unique smart safe for various sectors.</p><br>
+      <img src="./images/VikelaWeb black 1.0ab9d5bb.png" alt="Project 5 Details">
+      <button class="next" data-next="modal6">Next</button>
+  </div>
 </div>
 
 <!-- Modal 6 -->
 <div id="modal6" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="modal6">&times;</span>
-        <h3>Vikela web portal</h3>
-        <p>Providing users with the ability to customise, monitor, and add devices to their smart safe, print receipts and count the bills deposited.</p>
-        <img src="./images/Vikela Portal 1.b1d35bd2.png" alt="Project 6 Details">
-        <button class="next" data-next="modal7">Next</button>
-    </div>
+  <div class="modal-content">
+      <span class="close" data-modal="modal6">&times;</span>
+      <h3>Vikela web portal</h3>
+      <p>Providing users with the ability to customise, monitor, and add devices to their smart safe, print receipts and count the bills deposited.</p>
+      <img src="./images/Vikela Portal 1.b1d35bd2.png" alt="Project 6 Details">
+      <button class="next" data-next="modal7">Next</button>
+  </div>
 </div>
-</section>
-</section>
-</section>
 
- <!-- Modal 7 -->
- <div id="modal7" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="modal7">&times;</span>
-        <h3>Huawei tracking system</h3>
-        <p>The Huawei tracking system enables users to monitor miners and vehicle activity on mining sites. It can also be adapted to track the spread and outbreaks of the COVID-19 virus.</p><br>
-        <img src="./images/Huawei Header.png" alt="Project 7 Details">
-        <button class="next" data-next="modal8">Next</button>
-    </div>
+<!-- Modal 7 -->
+<div id="modal7" class="modal">
+  <div class="modal-content">
+      <span class="close" data-modal="modal7">&times;</span>
+      <h3>Huawei tracking system</h3>
+      <p>The Huawei tracking system enables users to monitor miners and vehicle activity on mining sites. It can also be adapted to track the spread and outbreaks of the COVID-19 virus.</p><br>
+      <img src="./images/Huawei Header.png" alt="Project 7 Details">
+      <button class="next" data-next="modal8">Next</button>
+  </div>
 </div>
 
 <!-- Modal 8 -->
 <div id="modal8" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="modal8">&times;</span>
-        <h3>Pro-Find</h3>
-        <p>The Pro-Find mobile application is designed for SME businesses and job seekers in South Africa. It streamlines the scanning, shortlisting, and hiring process, making it faster and more efficient.</p><br>
-        <img src="./images/Pro-Find header.png" alt="Project 8 Details">
-        <button class="next" data-next="modal9">Next</button>
-    </div>
+  <div class="modal-content">
+      <span class="close" data-modal="modal8">&times;</span>
+      <h3>Pro-Find</h3>
+      <p>The Pro-Find mobile application is designed for SME businesses and job seekers in South Africa. It streamlines the scanning, shortlisting, and hiring process, making it faster and more efficient.</p><br>
+      <img src="./images/Pro-Find header.png" alt="Project 8 Details">
+      <button class="next" data-next="modal9">Next</button>
+  </div>
 </div>
 
 <!-- Modal 9 -->
 <div id="modal9" class="modal">
-    <div class="modal-content">
-        <span class="close" data-modal="modal9">&times;</span>
-        <h3>Quick score pro</h3>
-        <p>QSP (Quick Score Pro) is a mobile app that enables users to capture, manage, and view match and shooting range scores, based on their user roles.</p><br>
-        <img src="./images/QSPModal.png" alt="Project 9 Details">
-        <button class="next" data-next="modal1">Next</button>
-    </div>
+  <div class="modal-content">
+      <span class="close" data-modal="modal9">&times;</span>
+      <h3>Quick score pro</h3>
+      <p>QSP (Quick Score Pro) is a mobile app that enables users to capture, manage, and view match and shooting range scores, based on their user roles.</p><br>
+      <img src="./images/QSPModal.png" alt="Project 9 Details">
+      <button class="next" data-next="modal1">Next</button>
+  </div>
 </div>
-</section>
-</section>
-</section>
+
+
 
 <!-- Pricing Section -->
 <br>
 <br>
-<h2 class="Our packages">Our packages</h2>
+<h2 class="Our-packages">Our packages</h2>
 <section class="pricing-section">
-    <div class="pricing-container">
-        <div class="pricing-card card-1">
-            <h2>Graphic design & Animation</h2>
-             <!--< <p class="price">From R500</p> -->
-            <ul>
-                <li>- Logo design</li>
-                <li>- Poster design</li>
-                <li>- Flyers & brochures</li>
-                <li>- CV design (ATS friendly)</li>
-                <li>- animation</li>
-                <li>- Video editing</li>
-            </ul>
-            <p class="more">plus more</p>
-        </div>
-        
+  <div class="pricing-container">
+      <div class="pricing-card card-1">
+          <h2>Graphic design & Animation</h2>
+           <!--< <p class="price">From R500</p> -->
+          <ul>
+              <li>- Logo design</li>
+              <li>- Poster design</li>
+              <li>- Flyers & brochures</li>
+              <li>- CV design (ATS friendly)</li>
+              <li>- animation</li>
+              <li>- Video editing</li>
+          </ul>
+          <p class="more">plus more</p>
+      </div>
+      
 
-        <div class="pricing-card card-2">
-            <h2>Web design and development</h2>
-            <h3 class="Tagline2">(Popular package)</h3><br>
-            <!--<p class="price">From R3000</p> -->
-            <ul>
-                <li>- Consultation</li>
-                <li>- UX / UI design</li>
-                <li>- Development</li>
-                <li>- Domain name registration</li>
-                <li>- Hosting</li>
-                <li>- 1 Free email account</li>
-            </ul>
-        </div>
+      <div class="pricing-card card-2">
+          <h2>Web design and development</h2>
+          <h3 class="Tagline2">(Popular package)</h3><br>
+          <!--<p class="price">From R3000</p> -->
+          <ul>
+              <li>- Consultation</li>
+              <li>- UX / UI design</li>
+              <li>- Development</li>
+              <li>- Domain name registration</li>
+              <li>- Hosting</li>
+              <li>- 1 Free email account</li>
+          </ul>
+      </div>
 
-        <div class="pricing-card card-3">
-            <h2>Business packages</h2>
-            <h3 class="Tagline">(Ideal for startups and small businesses)</h3><br>
-            <!-- <p class="price">From R5000</p> -->
-            <ul>
-                <li>- Consultation</li> 
-                <li>- Branding (including logo design)</li>
-                <li>- UX / UI design</li>
-                <li>- Domain name registration</li>
-                <li>- Hosting</li>
-                <li>- Maintenance (content updates)</li>
-                <li>- 1 Free business email account</li>
-            </ul>
-        </div>
-    </div>
+      <div class="pricing-card card-3">
+          <h2>Business packages</h2>
+          <h3 class="Tagline">(Ideal for startups and small businesses)</h3><br>
+          <!-- <p class="price">From R5000</p> -->
+          <ul>
+              <li>- Consultation</li> 
+              <li>- Branding (including logo design)</li>
+              <li>- UX / UI design</li>
+              <li>- Domain name registration</li>
+              <li>- Hosting</li>
+              <li>- Maintenance (content updates)</li>
+              <li>- 1 Free business email account</li>
+          </ul>
+      </div>
+  </div>
 </section>
 
 <!-- Brands I've worked with -->
 <section class="brands-section">
-    <div class="container">
-        <h2 class="section-title">Some brands We've Worked With</h2>
-        <div class="brands-carousel">
-            <div class="carousel-wrapper">
-                <div class="carousel-slide">
-                    <img src="./images/absa-logo-red-bg.png" alt="Brand 1">
-                </div>
-                <div class="carousel-slide">
-                    <img src="./images/Logo_Capitec.png" alt="Brand 2">
-                </div>
-                <div class="carousel-slide">
-                    <img src="./images/Deloitte_Logo.png" alt="Brand 3">
-                </div>
-                <div class="carousel-slide">
-                    <img src="./images/discovery-health logo.png" alt="Brand 4">
-                </div>
-                <div class="carousel-slide">
-                    <img src="./images/FNB logo.png" alt="Brand 5">
-                </div>
-                <!-- Add more logos here -->
-            </div>
-        </div>
-    </div>
+  <div class="container">
+      <h2 class="section-title">Some brands We've Worked With</h2>
+      <div class="brands-carousel">
+          <div class="carousel-wrapper">
+              <div class="carousel-slide">
+                  <img src="./images/absa-logo-red-bg.png" alt="Brand 1">
+              </div>
+              <div class="carousel-slide">
+                  <img src="./images/Logo_Capitec.png" alt="Brand 2">
+              </div>
+              <div class="carousel-slide">
+                  <img src="./images/Deloitte_Logo.png" alt="Brand 3">
+              </div>
+              <div class="carousel-slide">
+                  <img src="./images/discovery-health logo.png" alt="Brand 4">
+              </div>
+              <div class="carousel-slide">
+                  <img src="./images/FNB logo.png" alt="Brand 5">
+              </div>
+              <!-- Add more logos here -->
+          </div>
+      </div>
+  </div>
 </section>
 
 <!-- Contact Section -->
- 
+
 <section id="contact" class="contact-section">
-    <div class="contact-form-container">
-        <!-- Logo inside the form container -->
-        <div class="logo-container">
-            <img src="./images/Realistic.Favicon48.png.png" alt="Logo" class="contact-logo">
-        </div><br>
-        <div class="section-title">
-            <h1>GET IN TOUCH</h1><br>
-            <p>We'd love to hear from you.<br>Please drop a message and we'll get back to you shortly.</p>
-        </div>
+  <div class="contact-form-container">
+      <!-- Logo inside the form container -->
+      <div class="logo-container">
+          <img src="./images/Realistic.Favicon48.png.png" alt="Logo" class="contact-logo">
+      </div><br>
+      <div class="section-title">
+          <h1>GET IN TOUCH</h1><br>
+          <p>We'd love to hear from you.<br>Please drop a message and we'll get back to you shortly.</p>
+      </div>
 
-        <form id="contact-form" action="mailto:ddbyalfonzo@gmail.com" method="POST">
-          <!--   <form action="mailto:someone@example.com" method="post" enctype="text/plain"></form>
-             ./sendmailphp/sendemail.php-->
-            <div class="form-group">
-                <label for="name">Your name</label>
-                <input type="text" id="name" name="name" required placeholder="Enter your name">
-            </div>
+      <form id="contact-form" action="mailto:ddbyalfonzo@gmail.com" method="POST">
+        <!--   <form action="mailto:someone@example.com" method="post" enctype="text/plain"></form>
+           ./sendmailphp/sendemail.php-->
+          <div class="form-group">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" required placeholder="Enter your name">
+          </div>
 
-            <div class="form-group">
-                <label for="email">Your email</label>
-                <input type="email" id="email" name="email" required placeholder="Enter your email">
-            </div>
+          <div class="form-group">
+              <label for="email">Your email</label>
+              <input type="email" id="email" name="email" required placeholder="Enter your email">
+          </div>
 
-            <div class="form-group">
-                <label for="subject">Subject</label>
-                <input type="text" id="subject" name="subject" required placeholder="Subject of your message">
-            </div>
+          <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required placeholder="Subject of your message">
+          </div>
 
-            <div class="form-group">
-                <label for="message">Your message</label>
-                
-                <textarea id="message" name="message" required placeholder="Enter your message"></textarea>
-            </div>
-            
-            <!-- <div id="form-response" class="response-message"></div> -->
+          <div class="form-group">
+              <label for="message">Your message</label>
+              
+              <textarea id="message" name="message" required placeholder="Enter your message"></textarea>
+          </div>
+          
+          <!-- <div id="form-response" class="response-message"></div> -->
 <button type="submit" class="submit-btn">Send message</button>
 </form>
-    </div>
+  </div>
 </section>
 
 
 
 <script>
-    // Handle form submission
-    document.getElementById("contact-form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the default form submission
+  // Handle form submission
+  document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the default form submission
 
-        const form = event.target;
-        const formData = new FormData(form);
-        const responseMessage = document.getElementById("form-response");
+      const form = event.target;
+      const formData = new FormData(form);
+      const responseMessage = document.getElementById("form-response");
 
-        // Make the AJAX request to send_email.php
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Display success message
-                responseMessage.innerHTML = "Your message has been sent successfully! We'll get back to you shortly.";
-                responseMessage.style.backgroundColor = "#4CAF50"; // Green color
-                form.reset(); // Reset form fields
-            } else {
-                // Display error message
-                responseMessage.innerHTML = "Sorry, something went wrong. Please try again later.";
-                responseMessage.style.backgroundColor = "#F44336"; // Red color
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            responseMessage.innerHTML = "An error occurred. Please try again.";
-            responseMessage.style.backgroundColor = "#F44336"; // Red color
-        });
-    })
+      // Make the AJAX request to send_email.php
+      fetch(form.action, {
+          method: 'POST',
+          body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              // Display success message
+              responseMessage.innerHTML = "Your message has been sent successfully! We'll get back to you shortly.";
+              responseMessage.style.backgroundColor = "#4CAF50"; // Green color
+              form.reset(); // Reset form fields
+          } else {
+              // Display error message
+              responseMessage.innerHTML = "Sorry, something went wrong. Please try again later.";
+              responseMessage.style.backgroundColor = "#F44336"; // Red color
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          responseMessage.innerHTML = "An error occurred. Please try again.";
+          responseMessage.style.backgroundColor = "#F44336"; // Red color
+      });
+  })
+
+/* === DESKTOP PHONE TILT === */
+const phoneTilts = document.querySelectorAll('.hero-phone-tilt');
+
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 10;
+    const y = (e.clientY / window.innerHeight - 0.5) * -10;
+
+    phoneTilts.forEach(phone => {
+      phone.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+    });
+  });
+
+  document.addEventListener('mouseleave', () => {
+    phoneTilts.forEach(phone => phone.style.transform = '');
+  });
+}
+
+
+/* === SMOOTH HERO → SERVICES SCROLL === */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+
+    e.preventDefault();
+    const y = target.getBoundingClientRect().top + window.pageYOffset - 80;
+
+    window.scrollTo({
+      top: y,
+      behavior: 'smooth'
+    });
+  });
+});
+
 </script>
 
 
 <!-- connect with us -->
 
 <section class="follow-us">
-    <p>Stay connected with us through our social media channels</p>
-    <div class="social-links">
-      <a href="https://wa.me/0785817191" target="_blank" class="social-link">
-        <i class="fab fa-whatsapp social-icon"></i>
-      </a>
-      <a href="https://www.facebook.com" target="_blank" class="social-link">
-        <i class="fab fa-facebook social-icon"></i>
-      </a>
-      <a href="https://www.instagram.com/ddbyalfonzo/" target="_blank" class="social-link">
-        <i class="fab fa-instagram social-icon"></i>
-      </a>
-    </div>
+  <p>Stay connected with us through our social media channels</p>
+  <div class="social-links">
+    <a href="https://wa.me/0785817191" target="_blank" class="social-link">
+      <i class="fab fa-whatsapp social-icon"></i>
+    </a>
+    <a href="https://www.facebook.com" target="_blank" class="social-link">
+      <i class="fab fa-facebook social-icon"></i>
+    </a>
+    <a href="https://www.instagram.com/ddbyalfonzo/" target="_blank" class="social-link">
+      <i class="fab fa-instagram social-icon"></i>
+    </a>
+  </div>
 
-  </section>
-  
+</section>
 
-    <!-- Footer Section -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Designed & Developed by Alfonzo. All rights reserved.</p>
-        </div>
-    </footer>
 
-    <script src="./javascript/script.js"></script>
+  <!-- Footer Section -->
+  <footer>
+      <div class="container">
+          <p>&copy; 2026 Designed & Developed by Alfonzo. All rights reserved.</p>
+      </div>
+  </footer>
+
+  <script src="./javascript/script.js"></script>
 </body>
 </html>
