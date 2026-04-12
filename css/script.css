@@ -786,10 +786,14 @@ h4 {
   gap: 12px;
 }
 
+.pricing-card.has-badge {
+  padding-top: 28px;
+}
+
 .package-badge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
+  position: relative;
+  display: inline-flex;
+  align-self: flex-start;
   padding: 6px 12px;
   border-radius: 999px;
   background: linear-gradient(135deg, rgba(47, 227, 194, 0.9), rgba(255, 200, 87, 0.9));
@@ -798,6 +802,7 @@ h4 {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  margin-bottom: 4px;
 }
 
 .package-btn {
@@ -1232,37 +1237,47 @@ footer {
     padding-top: 6rem;
   }
 
+  .hero-inner {
+    min-height: auto;
+  }
+
   .hero-stage {
-    display: block;
-    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-top: 0.2rem;
+    padding-bottom: 1.5rem;
   }
 
   .hero-carousel {
-    position: relative;
-    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
   }
 
   .hero-phone {
-    position: absolute;
-    width: min(52vw, 170px);
-  }
-
-  .hero-phone.a {
-    left: 50%;
-    top: 2%;
-    transform: translateX(-58%) rotate(-2deg);
+    position: relative;
+    width: min(70vw, 220px);
+    transform: none;
+    left: auto;
+    top: auto;
+    opacity: 1;
   }
 
   .hero-phone.b {
-    left: 50%;
-    top: 16%;
-    transform: translateX(-4%) rotate(2deg);
+    display: none;
   }
 
   .hero-note {
     position: static;
-    margin-top: 1.2rem;
-    max-width: 100%;
+    margin-top: 0.5rem;
+    max-width: 92%;
+    text-align: center;
+    right: auto;
+    bottom: auto;
   }
 
   .contact-form-container {
