@@ -1,122 +1,269 @@
-// JavaScript to handle the hamburger menu toggle
-const hamburgerMenu = document.getElementById('hamburger-menu');
-const navLinks = document.getElementById('nav-links');
+const hamburgerMenu = document.getElementById("hamburger-menu");
+const navLinks = document.getElementById("nav-links");
 
-hamburgerMenu.addEventListener('click', () => {
-    navLinks.classList.toggle('active'); // Toggle menu visibility on click
-});
-
-// Form validation and submission handling
-document.getElementById('contact-form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent form from submitting the default way
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-
-    // Check if any fields are empty
-    if (!name || !email || !subject || !message) {
-        alert("Please fill out all fields before submitting.");
-        return;
-    }
-
-    // Send the form data via AJAX or just submit the form (below)
-    this.submit();
-});
-
-// JavaScript to open and close modals
-document.querySelectorAll('.portfolio-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const modalId = item.getAttribute('data-modal');
-        const modal = document.getElementById(modalId);
-        modal.style.display = "block"; // Show modal
-    });
-});
-
-// Close modal when clicking the close button
-document.querySelectorAll('.close').forEach(closeButton => {
-    closeButton.addEventListener('click', () => {
-        const modal = document.getElementById(closeButton.getAttribute('data-modal'));
-        modal.style.display = "none"; // Hide modal
-    });
-});
-
-// Close modal when clicking outside of the modal content
-window.addEventListener('click', (event) => {
-    document.querySelectorAll('.modal').forEach(modal => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
-});
-
-// Next button logic
-document.querySelectorAll('.next').forEach(nextButton => {
-    nextButton.addEventListener('click', () => {
-        const currentModalId = nextButton.closest('.modal').id;
-        const nextModalId = nextButton.getAttribute('data-next');
-        
-        // Hide the current modal
-        document.getElementById(currentModalId).style.display = "none";
-        
-        // Show the next modal
-        document.getElementById(nextModalId).style.display = "block";
-    });
-});
-
-// Optional: Add more interactivity or animations here
-document.querySelector('.cta-button').addEventListener('click', () => {
-    alert("We're so excited to have you with us!");
-});
-
-
-
-// Pricing cards
-
-// This script adds the "visible" class to the cards when they are scrolled into view
-document.addEventListener("DOMContentLoaded", function () {
-    const pricingCards = document.querySelectorAll(".pricing-card");
-
-    function checkVisibility() {
-        const windowHeight = window.innerHeight;
-        pricingCards.forEach(card => {
-            const cardTop = card.getBoundingClientRect().top;
-            if (cardTop < windowHeight - 100) {
-                card.classList.add("visible");
-            }
-        });
-    }
-
-    window.addEventListener("scroll", checkVisibility);
-    checkVisibility(); // Initial check to show the cards when page loads
-});
-
-
-// Optional: You can trigger the animation on page load using JavaScript if you want more control.
-// In this case, the CSS animation works without JS, but you can also add JS for more complex behaviors.
-document.addEventListener('DOMContentLoaded', () => {
-    const heading = document.querySelector('.animated-heading');
-    heading.style.animation = 'fadeInGrow 2s ease-out forwards';
+if (hamburgerMenu && navLinks) {
+  hamburgerMenu.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("active");
+    hamburgerMenu.classList.toggle("active", isOpen);
+    hamburgerMenu.setAttribute("aria-expanded", String(isOpen));
   });
-  
 
-// Brands I've worked with
-document.addEventListener("DOMContentLoaded", function () {
-    const carouselWrapper = document.querySelector('.carousel-wrapper');
-    const slides = document.querySelectorAll('.carousel-slide');
-    const totalSlides = slides.length;
-    let currentIndex = 0;
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("active");
+      hamburgerMenu.classList.remove("active");
+      hamburgerMenu.setAttribute("aria-expanded", "false");
+    });
+  });
+}
 
-    // Function to move the carousel
-    function moveCarousel() {
-        const offset = -currentIndex * (slides[0].offsetWidth + 30); // Slide width + margin
-        carouselWrapper.style.transform = `translateX(${offset}px)`;
+// Package enquiry buttons
+const packageButtons = document.querySelectorAll(".package-btn");
+const packageField = document.getElementById("package");
+const subjectField = document.getElementById("subject");
+const messageField = document.getElementById("message");
+
+packageButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const selected = button.dataset.package;
+    if (!selected) return;
+
+    if (packageField) {
+      packageField.value = selected;
     }
 
-    // Auto-loop functionality
-    setInterval(() => {
-        currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
-        moveCarousel();
-    }, 3000); // Move every 3 seconds
+    if (subjectField && !subjectField.value) {
+      subjectField.value = `Package enquiry: ${selected}`;
+    }
+
+    if (messageField) {
+      const prefix = `Package selected: ${selected}`;
+      if (!messageField.value.includes(prefix)) {
+        messageField.value = messageField.value.trim()
+          ? `${prefix}
+
+${messageField.value}`
+          : `${prefix}
+
+`;
+      }
+    }
+  });
 });
+
+// Smooth scrolling with nav offset
+const navHeight = document.querySelector(".navbar")?.offsetHeight ?? 0;
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const href = link.getAttribute("href");
+    if (!href || href === "#") {
+      return;
+    }
+
+    const target = document.querySelector(href);
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight + 6;
+    window.scrollTo({ top, behavior: "smooth" });
+  });
+});
+
+// Active nav link tracking
+const sectionLinks = Array.from(document.querySelectorAll(".nav-links a"));
+const sectionTargets = document.querySelectorAll("section[id]");
+
+if (sectionLinks.length && sectionTargets.length) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.getAttribute("id");
+        sectionLinks.forEach((link) => {
+          link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+        });
+      });
+    },
+    {
+      rootMargin: "-45% 0px -45% 0px",
+      threshold: 0,
+    }
+  );
+
+  sectionTargets.forEach((section) => sectionObserver.observe(section));
+}
+
+// Reveal on scroll
+const revealElements = document.querySelectorAll("[data-reveal]");
+
+if (revealElements.length) {
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  revealElements.forEach((el, index) => {
+    el.classList.add("reveal");
+    el.style.transitionDelay = `${Math.min(index * 0.05, 0.3)}s`;
+    revealObserver.observe(el);
+  });
+}
+
+// Hero phone tilt
+const phoneTilts = document.querySelectorAll(".hero-phone-tilt");
+
+if (
+  phoneTilts.length &&
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches
+) {
+  document.addEventListener("mousemove", (event) => {
+    const x = (event.clientX / window.innerWidth - 0.5) * 10;
+    const y = (event.clientY / window.innerHeight - 0.5) * -10;
+
+    phoneTilts.forEach((phone) => {
+      phone.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+    });
+  });
+
+  document.addEventListener("mouseleave", () => {
+    phoneTilts.forEach((phone) => {
+      phone.style.transform = "";
+    });
+  });
+}
+
+// Modal handling
+const modals = document.querySelectorAll(".modal");
+
+const openModal = (modalId) => {
+  const modal = document.getElementById(modalId);
+  if (!modal) return;
+  modal.classList.add("active");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+};
+
+const closeModal = (modal) => {
+  if (!modal) return;
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+  if (!document.querySelector(".modal.active")) {
+    document.body.classList.remove("modal-open");
+  }
+};
+
+document.querySelectorAll(".portfolio-item").forEach((item) => {
+  item.addEventListener("click", () => {
+    const modalId = item.getAttribute("data-modal");
+    if (modalId) {
+      openModal(modalId);
+    }
+  });
+});
+
+document.querySelectorAll(".close").forEach((closeButton) => {
+  closeButton.addEventListener("click", () => {
+    const modalId = closeButton.getAttribute("data-modal");
+    if (modalId) {
+      closeModal(document.getElementById(modalId));
+    }
+  });
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target.classList.contains("modal")) {
+    closeModal(event.target);
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".modal.active").forEach((modal) => closeModal(modal));
+  }
+});
+
+document.querySelectorAll(".next").forEach((nextButton) => {
+  nextButton.addEventListener("click", () => {
+    const currentModal = nextButton.closest(".modal");
+    const nextModalId = nextButton.getAttribute("data-next");
+    if (currentModal) {
+      closeModal(currentModal);
+    }
+    if (nextModalId) {
+      openModal(nextModalId);
+    }
+  });
+});
+
+// Contact form handling
+const contactForm = document.getElementById("contact-form");
+const responseMessage = document.getElementById("form-response");
+
+if (contactForm && responseMessage) {
+  contactForm.addEventListener("submit", (event) => {
+    if (!contactForm.checkValidity()) {
+      event.preventDefault();
+      responseMessage.textContent = "Please fill in all fields before submitting.";
+      return;
+    }
+
+    const action = contactForm.getAttribute("action") || "";
+    if (action.startsWith("mailto:")) {
+      event.preventDefault();
+      responseMessage.textContent = "Thanks! Your email client should open shortly.";
+      setTimeout(() => {
+        contactForm.submit();
+      }, 150);
+      return;
+    }
+
+    event.preventDefault();
+    const formData = new FormData(contactForm);
+
+    fetch(action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then(async (response) => {
+        const contentType = response.headers.get("content-type") || "";
+        let data = {};
+
+        if (contentType.includes("application/json")) {
+          data = await response.json();
+        } else {
+          const text = await response.text();
+          data = { message: text };
+        }
+
+        const isSuccess = data?.success ?? data?.ok ?? response.ok;
+        if (isSuccess) {
+          responseMessage.textContent = "Message sent successfully. We'll be in touch soon.";
+          contactForm.reset();
+        } else {
+          const errorMessage =
+            data?.message ||
+            data?.error ||
+            (Array.isArray(data?.errors) && data.errors[0]?.message) ||
+            "Something went wrong. Please try again.";
+          responseMessage.textContent = errorMessage;
+        }
+      })
+      .catch(() => {
+        responseMessage.textContent = "Something went wrong. Please try again.";
+      });
+  });
+}
+
+
