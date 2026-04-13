@@ -1,6 +1,61 @@
 const hamburgerMenu = document.getElementById("hamburger-menu");
 const navLinks = document.getElementById("nav-links");
 
+// Tap feedback for touch devices (show logo briefly on tap, not on long press)
+if (window.matchMedia("(pointer: coarse)").matches) {
+  const tapLogo = document.createElement("div");
+  tapLogo.className = "tap-feedback";
+  tapLogo.innerHTML = '<img src="./images/Realistic.Favicon48.png.png" alt="" aria-hidden="true">';
+  document.body.appendChild(tapLogo);
+
+  let longPressTimer = null;
+  let longPressTriggered = false;
+  let hideTimer = null;
+  let touchMoved = false;
+
+  document.addEventListener(
+    "touchstart",
+    (event) => {
+      if (event.touches.length !== 1) return;
+      touchMoved = false;
+      longPressTriggered = false;
+      clearTimeout(longPressTimer);
+      longPressTimer = setTimeout(() => {
+        longPressTriggered = true;
+      }, 450);
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    "touchmove",
+    () => {
+      touchMoved = true;
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    "touchend",
+    (event) => {
+      clearTimeout(longPressTimer);
+      if (longPressTriggered || touchMoved) return;
+      const touch = event.changedTouches[0];
+      if (!touch) return;
+
+      tapLogo.style.left = `${touch.clientX}px`;
+      tapLogo.style.top = `${touch.clientY}px`;
+      tapLogo.classList.add("show");
+
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        tapLogo.classList.remove("show");
+      }, 260);
+    },
+    { passive: true }
+  );
+}
+
 if (hamburgerMenu && navLinks) {
   hamburgerMenu.addEventListener("click", () => {
     const isOpen = navLinks.classList.toggle("active");
@@ -179,6 +234,36 @@ document.querySelectorAll(".close").forEach((closeButton) => {
   });
 });
 
+document.addEventListener("click", (event) => {
+  const nextButton = event.target.closest(".next");
+  if (!nextButton) return;
+  event.preventDefault();
+  event.stopPropagation();
+
+  const currentModal = nextButton.closest(".modal");
+  const nextModalId = nextButton.getAttribute("data-next");
+
+  const modalList = Array.from(document.querySelectorAll(".modal"));
+  const modalMap = new Map(modalList.map((modal) => [modal.id, modal]));
+
+  let nextModal = null;
+  if (nextModalId && modalMap.has(nextModalId)) {
+    nextModal = modalMap.get(nextModalId);
+  } else if (currentModal) {
+    const currentIndex = modalList.indexOf(currentModal);
+    if (currentIndex !== -1) {
+      nextModal = modalList[(currentIndex + 1) % modalList.length];
+    }
+  }
+
+  if (currentModal) {
+    closeModal(currentModal);
+  }
+  if (nextModal) {
+    openModal(nextModal.id);
+  }
+});
+
 window.addEventListener("click", (event) => {
   if (event.target.classList.contains("modal")) {
     closeModal(event.target);
@@ -189,19 +274,6 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     document.querySelectorAll(".modal.active").forEach((modal) => closeModal(modal));
   }
-});
-
-document.querySelectorAll(".next").forEach((nextButton) => {
-  nextButton.addEventListener("click", () => {
-    const currentModal = nextButton.closest(".modal");
-    const nextModalId = nextButton.getAttribute("data-next");
-    if (currentModal) {
-      closeModal(currentModal);
-    }
-    if (nextModalId) {
-      openModal(nextModalId);
-    }
-  });
 });
 
 // Contact form handling
@@ -265,5 +337,3 @@ if (contactForm && responseMessage) {
       });
   });
 }
-
-
