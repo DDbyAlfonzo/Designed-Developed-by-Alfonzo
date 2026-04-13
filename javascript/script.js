@@ -216,13 +216,28 @@ const closeModal = (modal) => {
   }
 };
 
-document.querySelectorAll(".portfolio-item").forEach((item) => {
-  item.addEventListener("click", () => {
-    const modalId = item.getAttribute("data-modal");
-    if (modalId) {
-      openModal(modalId);
-    }
-  });
+const openPortfolioModal = (item) => {
+  const modalId = item?.getAttribute("data-modal");
+  if (modalId) {
+    openModal(modalId);
+  }
+};
+
+let lastTouchTime = 0;
+
+document.addEventListener("pointerup", (event) => {
+  if (event.pointerType !== "touch") return;
+  const item = event.target.closest(".portfolio-item");
+  if (!item) return;
+  lastTouchTime = Date.now();
+  openPortfolioModal(item);
+});
+
+document.addEventListener("click", (event) => {
+  if (Date.now() - lastTouchTime < 600) return;
+  const item = event.target.closest(".portfolio-item");
+  if (!item) return;
+  openPortfolioModal(item);
 });
 
 document.querySelectorAll(".close").forEach((closeButton) => {
