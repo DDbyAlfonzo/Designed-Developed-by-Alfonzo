@@ -240,13 +240,29 @@ document.addEventListener("click", (event) => {
   openPortfolioModal(item);
 });
 
-document.querySelectorAll(".close").forEach((closeButton) => {
-  closeButton.addEventListener("click", () => {
+const handleModalClose = (target) => {
+  if (!target) return false;
+  const closeButton = target.closest(".close");
+  if (closeButton) {
     const modalId = closeButton.getAttribute("data-modal");
-    if (modalId) {
-      closeModal(document.getElementById(modalId));
-    }
-  });
+    const modal = modalId ? document.getElementById(modalId) : closeButton.closest(".modal");
+    closeModal(modal);
+    return true;
+  }
+  if (target.classList && target.classList.contains("modal")) {
+    closeModal(target);
+    return true;
+  }
+  return false;
+};
+
+document.addEventListener("pointerup", (event) => {
+  if (event.pointerType !== "touch") return;
+  handleModalClose(event.target);
+});
+
+document.addEventListener("click", (event) => {
+  handleModalClose(event.target);
 });
 
 document.addEventListener("click", (event) => {
@@ -279,11 +295,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-window.addEventListener("click", (event) => {
-  if (event.target.classList.contains("modal")) {
-    closeModal(event.target);
-  }
-});
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
