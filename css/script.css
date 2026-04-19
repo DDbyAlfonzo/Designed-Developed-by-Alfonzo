@@ -556,12 +556,14 @@ h4 {
 .hero-stage {
   position: relative;
   height: 520px;
+  perspective: 1800px;
 }
 
 .hero-carousel {
   position: relative;
   width: 100%;
   height: 100%;
+  transform-style: preserve-3d;
 }
 
 .hero-stage::after {
@@ -589,28 +591,60 @@ h4 {
 .hero-phone-shell {
   position: absolute;
   inset: 0;
-  background: #0b0d12;
-  border-radius: 40px;
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08),
-    0 35px 80px rgba(0, 0, 0, 0.55);
+  z-index: 1;
+  background:
+    linear-gradient(155deg, #8d95a1 0%, #343a45 10%, #0f1218 34%, #07090d 58%, #3b414b 88%, #9aa1ab 100%);
+  border-radius: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.72),
+    0 30px 70px rgba(0, 0, 0, 0.52);
   overflow: hidden;
 }
 
 .hero-phone-shell img {
-  width: calc(100% - 14px);
-  height: calc(100% - 14px);
-  margin: 7px;
-  border-radius: 32px;
+  display: block;
+  width: calc(100% - 18px);
+  height: calc(100% - 18px);
+  margin: 9px;
+  border-radius: 36px;
   object-fit: cover;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.hero-phone-shell::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 38%;
+  height: 30px;
+  transform: translateX(-50%);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 70% 48%, rgba(43, 46, 55, 0.95) 0 4px, transparent 4.5px),
+    radial-gradient(circle at 30% 48%, rgba(16, 18, 23, 0.9) 0 3px, transparent 3.5px),
+    linear-gradient(180deg, #0b0d12, #05070b);
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 6px rgba(0, 0, 0, 0.45);
+  z-index: 3;
+  pointer-events: none;
 }
 
 .hero-phone-shell::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.05) 45%, transparent 70%);
-  opacity: 0.3;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.08) 18%, rgba(255, 255, 255, 0) 42%),
+    radial-gradient(circle at 75% 18%, rgba(255, 255, 255, 0.16), transparent 18%);
+  opacity: 0.52;
   pointer-events: none;
+  z-index: 2;
 }
 
 .hero-phone.a {
@@ -624,14 +658,46 @@ h4 {
 }
 
 .hero-phone-tilt {
+  position: relative;
+  display: block;
   width: 100%;
   height: 100%;
+  filter: drop-shadow(0 34px 58px rgba(0, 0, 0, 0.42));
   transition: transform 0.25s ease-out;
   will-change: transform;
 }
 
+.hero-phone-tilt::before,
+.hero-phone-tilt::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(180deg, #808792, #2a2f37 45%, #090b11);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+}
+
+.hero-phone-tilt::before {
+  left: -4px;
+  top: 22%;
+  width: 4px;
+  height: 42px;
+  border-radius: 4px 0 0 4px;
+  box-shadow:
+    0 56px 0 0 #515863,
+    0 86px 0 0 #515863,
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.hero-phone-tilt::after {
+  right: -4px;
+  top: 30%;
+  width: 4px;
+  height: 74px;
+  border-radius: 0 4px 4px 0;
+}
+
 .hero-note {
-  z-index: 2;
+  z-index: 3;
   position: absolute;
   bottom: 10%;
   right: 0;
@@ -1423,6 +1489,12 @@ footer {
     justify-content: center;
   }
 
+  .scroll-indicator {
+    position: static;
+    transform: none;
+    margin: 1rem auto 0;
+  }
+
 }
 
 @media (max-width: 640px) {
@@ -1491,11 +1563,15 @@ footer {
 
   .hero-note {
     position: static;
-    margin-top: 0.4rem;
+    margin-top: 0.8rem;
     max-width: 92%;
     text-align: center;
     right: auto;
     bottom: auto;
+  }
+
+  .scroll-indicator {
+    margin-top: 0.6rem;
   }
 
   .contact-form-container {
