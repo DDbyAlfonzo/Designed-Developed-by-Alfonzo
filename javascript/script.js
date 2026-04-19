@@ -197,8 +197,6 @@ if (
 }
 
 // Modal handling
-const modals = document.querySelectorAll(".modal");
-
 const openModal = (modalId) => {
   const modal = document.getElementById(modalId);
   if (!modal) return;

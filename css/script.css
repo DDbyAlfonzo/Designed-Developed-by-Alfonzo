@@ -584,10 +584,6 @@ h4 {
   z-index: 1;
 }
 
-.hero-phone.b {
-  animation-delay: 1.4s;
-}
-
 .hero-phone-shell {
   position: absolute;
   inset: 0;
@@ -653,6 +649,7 @@ h4 {
 }
 
 .hero-phone.b {
+  animation-delay: 1.4s;
   left: 30%;
   top: 6%;
 }
@@ -1491,8 +1488,10 @@ footer {
 
   .scroll-indicator {
     position: static;
+    left: auto;
+    bottom: auto;
     transform: none;
-    margin: 1rem auto 0;
+    margin: 1.4rem auto 0;
   }
 
 }
@@ -1571,7 +1570,7 @@ footer {
   }
 
   .scroll-indicator {
-    margin-top: 0.6rem;
+    margin-top: 1.6rem;
   }
 
   .contact-form-container {

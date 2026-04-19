@@ -1,0 +1,25 @@
+{
+  "name": "ddbyalfonzo-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4173",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "format": "prettier --write \"*.{html,json,md}\" \"css/**/*.css\" \"javascript/**/*.js\" \"tests/**/*.js\"",
+    "lint:html": "htmlhint index.html",
+    "lint:css": "stylelint \"css/**/*.css\"",
+    "lint:js": "eslint javascript/**/*.js tests/**/*.js playwright.config.js",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "test:visual": "playwright test",
+    "test": "npm run lint && npm run test:visual"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
+    "htmlhint": "^1.9.2",
+    "prettier": "^3.8.3",
+    "stylelint": "^17.8.0",
+    "vite": "^8.0.8"
+  }
+}
