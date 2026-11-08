@@ -732,6 +732,13 @@ html.has-pen .btn-paper.pen-hot,html.has-pen .intro__work.pen-hot,html.has-pen .
 .intro--scattered{visibility:hidden;transition:visibility 0s .7s}
 /* sections below the film skip rendering until they're near the screen */
 #cards,#proof,#packages,#process,.foot{content-visibility:auto;contain-intrinsic-size:auto 700px}
+
+/* film on phones: a normal-height autoplaying section — no scroll pinning */
+body[data-film-mode="play"] .fir{display:none}
+body[data-film-mode="play"] .film-stage{height:100svh;max-height:760px;min-height:520px}
+body[data-film-mode="play"] .film-hint{display:none}
+.film-stage.is-paused::before{content:"paused · tap to play";position:absolute;z-index:30;left:50%;top:calc(64px + env(safe-area-inset-top,0px));transform:translateX(-50%);padding:8px 14px;border-radius:999px;background:var(--cream);color:var(--ink);font:500 12px/1 var(--mono);letter-spacing:.1em}
+body{overflow-x:clip}
 </style>
 </head>
 <body>
@@ -1370,10 +1377,27 @@ if(hasG&&!reduce){
   gsap.registerPlugin(ScrollTrigger);
   buildScenes();showBeat(0);setNotch(0);
   ScrollTrigger.config({ignoreMobileResize:true});
-  ST=ScrollTrigger.create({trigger:'#stage',start:'top top',end:()=>'+='+innerHeight*E*FILM_SCALE,pin:true,pinSpacing:true,anticipatePin:1,invalidateOnRefresh:true});
+  /* phones & tablets: the film plays like a video in a normal-height section, so the page always scrolls freely.
+     Desktop: the film is pinned and scrubbed by scroll. */
+  const MOBILE=matchMedia('(max-width:860px),(hover:none) and (pointer:coarse)').matches;
+  document.body.dataset.filmMode=MOBILE?'play':'scrub';
+  if(!MOBILE){
+    ST=ScrollTrigger.create({trigger:'#stage',start:'top top',end:()=>'+='+innerHeight*E*FILM_SCALE,pin:true,pinSpacing:true,anticipatePin:1,invalidateOnRefresh:true});
+    addEventListener('load',()=>ScrollTrigger.refresh());
+  }else{
+    const AP_DUR=16000,HOLD=2600;let inView=false,paused=false,last=0,heldAt=0;
+    new IntersectionObserver(es=>{inView=es[0].isIntersecting&&es[0].intersectionRatio>=.45},{threshold:[0,.45,.8]}).observe(stage);
+    stage.addEventListener('click',e=>{if(e.target.closest('button,a'))return;paused=!paused;stage.classList.toggle('is-paused',paused)});
+    (function play(t){const dt=last?Math.min(64,t-last):0;last=t;
+      if(inView&&!paused){
+        if(target<1){target=Math.min(1,(target<0?0:target)+dt/AP_DUR)}
+        else{if(!heldAt)heldAt=t;if(t-heldAt>HOLD){heldAt=0;target=0;cur=0}}
+      }
+      requestAnimationFrame(play)})(0);
+  }
   requestAnimationFrame(frameLoop);
-  addEventListener('load',()=>ScrollTrigger.refresh());
-  addEventListener('resize',()=>{BEATS.forEach((_,i)=>TL[i]&&TL[i].kill());buildScenes();lastBeat=-1});
+  let lastW=innerWidth;
+  addEventListener('resize',()=>{if(innerWidth===lastW)return;lastW=innerWidth;BEATS.forEach((_,i)=>TL[i]&&TL[i].kill());buildScenes();lastBeat=-1});
 }else{
   /* static: no pin; show logo scene and all captions stacked */
   stage.style.height='auto';stage.style.padding='120px 0 80px';
