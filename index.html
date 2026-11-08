@@ -733,11 +733,9 @@ html.has-pen .btn-paper.pen-hot,html.has-pen .intro__work.pen-hot,html.has-pen .
 /* sections below the film skip rendering until they're near the screen */
 #cards,#proof,#packages,#process,.foot{content-visibility:auto;contain-intrinsic-size:auto 700px}
 
-/* film on phones: a normal-height autoplaying section — no scroll pinning */
-body[data-film-mode="play"] .fir{display:none}
-body[data-film-mode="play"] .film-stage{height:100svh;max-height:760px;min-height:520px}
-body[data-film-mode="play"] .film-hint{display:none}
-.film-stage.is-paused::before{content:"paused · tap to play";position:absolute;z-index:30;left:50%;top:calc(64px + env(safe-area-inset-top,0px));transform:translateX(-50%);padding:8px 14px;border-radius:999px;background:var(--cream);color:var(--ink);font:500 12px/1 var(--mono);letter-spacing:.1em}
+/* film on phones: native sticky stage inside a tall wrapper (no JS pin) */
+body[data-film-mode="sticky"] .film-stage{position:sticky;top:0;height:100svh}
+body[data-film-mode="sticky"] .fir{display:none}
 body{overflow-x:clip}
 </style>
 </head>
@@ -1377,23 +1375,21 @@ if(hasG&&!reduce){
   gsap.registerPlugin(ScrollTrigger);
   buildScenes();showBeat(0);setNotch(0);
   ScrollTrigger.config({ignoreMobileResize:true});
-  /* phones & tablets: the film plays like a video in a normal-height section, so the page always scrolls freely.
-     Desktop: the film is pinned and scrubbed by scroll. */
+  /* phones & tablets: the full scroll story, driven by native CSS sticky instead of a JS pin,
+     so the page keeps the phone's own smooth, momentum scrolling. Desktop: ScrollTrigger pin. */
   const MOBILE=matchMedia('(max-width:860px),(hover:none) and (pointer:coarse)').matches;
-  document.body.dataset.filmMode=MOBILE?'play':'scrub';
+  document.body.dataset.filmMode=MOBILE?'sticky':'scrub';
   if(!MOBILE){
     ST=ScrollTrigger.create({trigger:'#stage',start:'top top',end:()=>'+='+innerHeight*E*FILM_SCALE,pin:true,pinSpacing:true,anticipatePin:1,invalidateOnRefresh:true});
     addEventListener('load',()=>ScrollTrigger.refresh());
   }else{
-    const AP_DUR=16000,HOLD=2600;let inView=false,paused=false,last=0,heldAt=0;
-    new IntersectionObserver(es=>{inView=es[0].isIntersecting&&es[0].intersectionRatio>=.45},{threshold:[0,.45,.8]}).observe(stage);
-    stage.addEventListener('click',e=>{if(e.target.closest('button,a'))return;paused=!paused;stage.classList.toggle('is-paused',paused)});
-    (function play(t){const dt=last?Math.min(64,t-last):0;last=t;
-      if(inView&&!paused){
-        if(target<1){target=Math.min(1,(target<0?0:target)+dt/AP_DUR)}
-        else{if(!heldAt)heldAt=t;if(t-heldAt>HOLD){heldAt=0;target=0;cur=0}}
-      }
-      requestAnimationFrame(play)})(0);
+    const wrap=stage.parentElement;let wTop=0,wH=0,sH=1;
+    wrap.style.height=`calc(100svh + ${Math.round(E*FILM_SCALE*100)}svh)`;
+    const measure=()=>{wTop=wrap.getBoundingClientRect().top+scrollY;wH=wrap.offsetHeight;sH=stage.offsetHeight};
+    ST={get start(){return wTop},get end(){return wTop+wH-sH},get progress(){return Math.min(1,Math.max(0,(scrollY-wTop)/Math.max(1,wH-sH)))},
+        enable(){requestAnimationFrame(measure)},disable(){}};
+    measure();addEventListener('load',measure);setTimeout(measure,1200);
+    let mw=innerWidth;addEventListener('resize',()=>{if(innerWidth!==mw){mw=innerWidth;measure()}});
   }
   requestAnimationFrame(frameLoop);
   let lastW=innerWidth;
