@@ -41,7 +41,7 @@
   --gl:max(20px,env(safe-area-inset-left,0px));
   --gr:max(20px,env(safe-area-inset-right,0px));
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --crumple:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0065' numOctaves='5' seed='7'/%3E%3CfeDiffuseLighting lighting-color='%23f3eee4' surfaceScale='4.5'%3E%3CfeDistantLight azimuth='225' elevation='52'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+  --crumple:url("img/crumple.webp");
   --dots-ink:radial-gradient(circle,#16130F 34%,transparent 37%);
   --dots-red:radial-gradient(circle,#D0241C 34%,transparent 37%);
 }
@@ -718,6 +718,20 @@ html.has-pen .btn-paper.pen-hot,html.has-pen .intro__work.pen-hot,html.has-pen .
 /* phone never slices through the laptop: devices sit in a flat stack (phone painted on top); the laptop keeps its own 3D deck */
 .dev3d{transform-style:flat}
 .lap{perspective:1600px;perspective-origin:50% 30%}
+
+/* ===== touch & small screens: drop the costliest paint effects ===== */
+@media (hover:none),(max-width:860px){
+  .doodle,.intro__line,.intro--welcome .intro__line,#sketch svg,#pcursorP,#ball,#bin{filter:none}
+  .film-stage::after,.lap-lid::after,.ph-body::after,.lap-deck .top::after,.tear .tex,.fc-paper__sheet::after,.pc-dev::after,.wx__media::after,.dstage::after,.cs-cover::after,.slg__paper-sheet::after,.lap-scr::after,.ph-scr::after{display:none}
+  .fc-word,.is-on .fc-word{filter:none!important}
+  #logo img,#logo .wm b,#logo .wm span,#bigmark,#bigmark span{text-shadow:none;filter:none}
+  .layer{will-change:auto}
+}
+
+/* once the intro has scattered it stops painting entirely */
+.intro--scattered{visibility:hidden;transition:visibility 0s .7s}
+/* sections below the film skip rendering until they're near the screen */
+#cards,#proof,#packages,#process,.foot{content-visibility:auto;contain-intrinsic-size:auto 700px}
 </style>
 </head>
 <body>
@@ -1111,7 +1125,7 @@ function render(p){const ph=playhead(p);
 function frameLoop(){if(ST){target=ST.progress}
   if(cur<0)cur=target;cur+=(target-cur)*.2;if(Math.abs(target-cur)<.0002)cur=target;
   /* quantise to 24fps frames of the active beat */
-  render(cur);requestAnimationFrame(frameLoop)}
+  if(cur!==frameLoop.last){render(cur);frameLoop.last=cur}requestAnimationFrame(frameLoop)}
 
 /* fir ruler */
 (()=>{const tk=$('firTicks');for(let i=0;i<=40;i++){const t=document.createElement('i');t.style.top=(i/40*100)+'%';if(i%5===0)t.style.width='14px',t.style.left='7px';tk.appendChild(t)}
@@ -1151,7 +1165,7 @@ function runIntro(){
     if(shown<100)requestAnimationFrame(tick);else setTimeout(()=>intro.classList.add('intro--welcome'),180)})();
 }
 runIntro();
-function scatter(on){intro.classList.toggle('intro--scattered',on);document.body.dataset.scrolled=on?'1':'0'}
+function scatter(on){if(intro.classList.contains('intro--scattered')!==on)intro.classList.toggle('intro--scattered',on);setData('scrolled',on?'1':'0')}
 const inv=$('invite');let invDone=false;try{invDone=!!localStorage.getItem('dba-invite')}catch(e){}
 function hideInvite(){invDone=true;inv.classList.remove('on');try{localStorage.setItem('dba-invite','1')}catch(e){}}
 inv.querySelector('.inv__go').onclick=()=>{SND.set(true);hideInvite()};inv.querySelector('.inv__x').onclick=hideInvite;
@@ -1215,9 +1229,11 @@ $('form').addEventListener('submit',e=>{e.preventDefault();const f=e.target,st=$
 });
 
 /* ===== nav state + scroll flags ===== */
-function onScroll(){const y=scrollY;if(document.body.dataset.view==='home'){scatter(y>8);
-  const c=$('contact').getBoundingClientRect().top<innerHeight*.45,pk=$('packages').getBoundingClientRect().top<innerHeight*.45;const w=film.getBoundingClientRect().bottom<innerHeight*.5;const k=c?'contact':pk?'packages':w?'work':'';navA.forEach(l=>l.classList.toggle('is-act',l.dataset.k===k))}
-  const fr=film.getBoundingClientRect();document.body.dataset.film=(fr.top<=1&&fr.bottom>innerHeight*.5)?'1':'0';maybeInvite()}
+let scrollQueued=false;function onScroll(){if(scrollQueued)return;scrollQueued=true;requestAnimationFrame(()=>{scrollQueued=false;doScroll()})}
+function setData(k,v){if(document.body.dataset[k]!==v)document.body.dataset[k]=v}
+function doScroll(){const y=scrollY;if(document.body.dataset.view==='home'){scatter(y>8);
+  const c=$('contact').getBoundingClientRect().top<innerHeight*.45,pk=$('packages').getBoundingClientRect().top<innerHeight*.45;const w=film.getBoundingClientRect().bottom<innerHeight*.5;const k=c?'contact':pk?'packages':w?'work':'';if(k!==doScroll.k){doScroll.k=k;navA.forEach(l=>l.classList.toggle('is-act',l.dataset.k===k))}}
+  const fr=film.getBoundingClientRect();setData('film',(fr.top<=1&&fr.bottom>innerHeight*.5)?'1':'0');maybeInvite()}
 addEventListener('scroll',onScroll,{passive:true});
 
 
@@ -1353,6 +1369,7 @@ addEventListener('scroll',pageScroll,{passive:true});addEventListener('resize',p
 if(hasG&&!reduce){
   gsap.registerPlugin(ScrollTrigger);
   buildScenes();showBeat(0);setNotch(0);
+  ScrollTrigger.config({ignoreMobileResize:true});
   ST=ScrollTrigger.create({trigger:'#stage',start:'top top',end:()=>'+='+innerHeight*E*FILM_SCALE,pin:true,pinSpacing:true,anticipatePin:1,invalidateOnRefresh:true});
   requestAnimationFrame(frameLoop);
   addEventListener('load',()=>ScrollTrigger.refresh());
