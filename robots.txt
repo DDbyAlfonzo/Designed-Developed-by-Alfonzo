@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://www.ddbyalfonzo.co.za/sitemap.xml
