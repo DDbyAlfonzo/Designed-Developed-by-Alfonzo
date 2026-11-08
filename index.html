@@ -328,6 +328,30 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
 @media (max-height:820px) and (min-width:961px){.case{position:relative;top:auto}}
 @media (max-width:600px){.dock a{padding:0 10px}.dock .talk{padding:0 14px}}
 
+
+/* ---------- own products ---------- */
+.products{padding-top:clamp(40px,5vw,72px)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.flowlo{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(24px,4vw,56px);align-items:center;padding:clamp(24px,3.5vw,48px);border-radius:28px;background:linear-gradient(150deg,#E6FBF4,#F2FBFE 55%,#fff);border:1px solid #D5EEE6}
+.fl-txt{display:flex;flex-direction:column;gap:14px;min-width:0}
+.fl-tag{align-self:flex-start;padding:6px 12px;border-radius:999px;background:#0F7A5E;color:#fff;font:700 13px/1 var(--sans)}
+.flowlo h3{font:800 clamp(34px,4vw,52px)/1 var(--sans);color:#0A111C}
+.fl-lead{margin:0;font:700 clamp(18px,1.8vw,22px)/1.35 var(--sans);color:#0A111C}
+.flowlo p{margin:0;color:#334047}
+.fl-list{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:10px}
+.fl-list li{display:flex;gap:10px;align-items:flex-start;color:#26333A}
+.fl-list svg{width:18px;height:18px;flex:none;margin-top:4px;color:#0F7A5E}
+.fl-meta{font-size:14px;color:#4A585F!important}
+.fl-btn{align-self:flex-start;background:linear-gradient(180deg,#1C2A3A,#0A111C);border-color:rgba(255,255,255,.15);box-shadow:0 10px 26px rgba(10,17,28,.25),inset 0 1px 0 rgba(255,255,255,.15)}
+.fl-btn:hover{box-shadow:0 16px 32px rgba(10,17,28,.3),inset 0 1px 0 rgba(255,255,255,.15)}
+.fl-shot{margin:0;border-radius:20px;overflow:hidden;box-shadow:0 30px 60px rgba(10,17,28,.18);aspect-ratio:1440/714;background:#fff}
+.fl-shot img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.nf{margin-top:16px;display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px 18px;padding:22px 26px;border-radius:20px;background:var(--ink);color:#F4EFEE}
+.nf h3{font:700 22px/1.2 var(--sans)}
+.nf p{margin:0;color:#B6ABAA}
+.nf-tag{padding:6px 12px;border-radius:999px;border:1px solid #5A1712;color:#FF8A82;font:700 13px/1 var(--sans);white-space:nowrap}
+@media (max-width:960px){.flowlo{grid-template-columns:1fr}.fl-shot{order:-1}.nf{grid-template-columns:1fr;justify-items:start}}
+
 /* ---------- responsive ---------- */
 @media (max-width:960px){
   .case{grid-template-columns:1fr;min-height:0;position:relative;top:auto}
@@ -374,6 +398,7 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
   <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z" fill="currentColor"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
 </svg>
 
@@ -422,6 +447,41 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
         <div class="sec-head rv" style="margin-top:clamp(56px,7vw,90px)"><span class="chip">Kind words</span><h2>What clients <em class="s">say</em></h2></div>
         <div class="qgrid" id="qgrid"></div>
       </div>
+    </div>
+  </section>
+
+
+  <!-- PRODUCTS -->
+  <section class="sec products" id="products" aria-labelledby="prodH">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="chip">Own products</span>
+        <h2 id="prodH">Products I'm <em class="s">building</em></h2>
+        <p>Alongside client work, I design and build my own products under DDbyAlfonzo.</p>
+      </div>
+      <article class="flowlo rv">
+        <div class="fl-txt">
+          <span class="fl-tag">Invite only · South African businesses</span>
+          <h3>FlowLo</h3>
+          <p class="fl-lead">One app for your stock, orders and deliveries. Clean stock, clean orders, faster sales.</p>
+          <p>FlowLo is an operations app for small businesses that sell from a kitchen counter, a café till or WhatsApp. It keeps every order moving from the shelf to the doorstep, so owners spend less time on admin and more time selling.</p>
+          <ul class="fl-list">
+            <li><svg><use href="#i-check"/></svg><span><b>Inventory tracker</b> with low-stock alerts before you run out</span></li>
+            <li><svg><use href="#i-check"/></svg><span><b>Incoming orders</b>, including WhatsApp orders, in one list</span></li>
+            <li><svg><use href="#i-check"/></svg><span><b>Delivery board</b> that follows each order from confirmed to delivered and paid</span></li>
+            <li><svg><use href="#i-check"/></svg><span><b>Daily takings</b> and a dashboard that flags what needs attention today</span></li>
+            <li><svg><use href="#i-check"/></svg><span><b>Customer updates</b> so buyers know where their order is</span></li>
+          </ul>
+          <p class="fl-meta">Designed and built end to end by Alfonzo · Next.js, TypeScript, Tailwind, Firebase, Framer Motion</p>
+          <a class="btn fl-btn" href="https://www.flowlo.co.za/" target="_blank" rel="noopener">Visit FlowLo <svg><use href="#i-out"/></svg><span class="sr-only">(opens in a new tab)</span></a>
+        </div>
+        <figure class="fl-shot"><img src="img/flowlo.webp" alt="FlowLo website: Clean stock. Clean orders. Faster sales." loading="lazy"></figure>
+      </article>
+      <article class="nf rv">
+        <span class="nf-tag">In development</span>
+        <h3>Number Forensics</h3>
+        <p>A security product that helps protect people and businesses from phone-number fraud. More to share soon.</p>
+      </article>
     </div>
   </section>
 
@@ -585,9 +645,9 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
   <div class="wrap">
     <div class="fgrid">
       <div><a class="logo" href="#top" style="color:#fff;padding:0"><img src="img/logo.webp" alt="">ddbyalfonzo</a><p>Designed &amp; developed by Alfonzo Louw. Websites, apps and brands for growing businesses.</p></div>
-      <div><h3>Explore</h3><a href="#work">Work</a><a href="#services">Services</a><a href="#packages">Packages</a><a href="#faq">FAQ</a></div>
+      <div><h3>Explore</h3><a href="#work">Work</a><a href="#products">Products</a><a href="#services">Services</a><a href="#packages">Packages</a><a href="#faq">FAQ</a></div>
       <div><h3>Services</h3><a href="#services">UX/UI design</a><a href="#services">Web development</a><a href="#services">Branding &amp; motion</a><a href="#process">How it works</a></div>
-      <div><h3>Connect</h3><a href="#contact">Start a project</a><a href="https://www.linkedin.com/in/alfonzolouw" target="_blank" rel="noopener">LinkedIn</a><a href="#contact">Johannesburg, South Africa</a></div>
+      <div><h3>Connect</h3><a href="https://www.flowlo.co.za/" target="_blank" rel="noopener">FlowLo</a><a href="#contact">Start a project</a><a href="https://www.linkedin.com/in/alfonzolouw" target="_blank" rel="noopener">LinkedIn</a><a href="#contact">Johannesburg, South Africa</a></div>
     </div>
     <div class="fbot"><span>© <span id="yr">2026</span> DDbyAlfonzo. All rights reserved.</span><span class="legal"><a href="privacy.html">Privacy notice</a> · <a href="terms.html">Terms of use</a></span></div>
   </div>
