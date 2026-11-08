@@ -76,7 +76,7 @@ em.s{font-family:var(--serif);font-style:italic;font-weight:700;letter-spacing:-
 .logo img{width:34px;height:auto}
 .hero-rate{margin-top:46px;display:flex;align-items:center;gap:10px;font:600 14px/1 var(--sans);color:#FFD9D4}
 .hero-rate i{width:8px;height:8px;border-radius:50%;background:#3CE07A;box-shadow:0 0 0 4px rgba(60,224,122,.18)}
-.hero h1{margin-top:22px;font:700 clamp(40px,6.6vw,86px)/1.04 var(--sans);letter-spacing:-.035em;max-width:15ch}
+.hero h1{margin-top:46px;font:700 clamp(40px,6.6vw,86px)/1.04 var(--sans);letter-spacing:-.035em;max-width:15ch}
 .hero h1 .w{display:inline-block}
 .glyphs{display:inline-flex;vertical-align:middle;margin:0 .12em;transform:translateY(-.06em)}
 .glyphs span{width:.78em;height:.78em;border-radius:50%;display:grid;place-items:center;margin-left:-.16em;border:3px solid #2A0705;box-shadow:0 6px 16px rgba(0,0,0,.35)}
@@ -408,7 +408,6 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
   <header class="hero">
     <div class="wrap">
       <a class="logo" href="#top" aria-label="DDbyAlfonzo home"><img src="img/logo.webp" alt="">ddbyalfonzo</a>
-      <p class="hero-rate"><i aria-hidden="true"></i>Open for new projects · Johannesburg, working worldwide</p>
       <h1 id="heroH"><span class="w">I</span> <span class="w">design</span> <span class="w">&amp;</span> <span class="w">build</span> <span class="w">products</span> <span class="w">that</span> <span class="w">help</span> <span class="w">businesses</span>
         <span class="glyphs" aria-hidden="true">
           <span class="g1"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-9.5 9.5H4.5v-6z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg></span>
@@ -816,7 +815,7 @@ if(!reduce&&'IntersectionObserver' in window){
 if(window.gsap&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
   gsap.registerPlugin(ScrollTrigger);ScrollTrigger.config({ignoreMobileResize:true});
   gsap.from('#heroH .w,#heroH .glyphs',{yPercent:60,opacity:0,duration:.9,ease:'power3.out',stagger:.05,delay:.1});
-  gsap.from('.hero-tag,.hero-ctas,.hero-rate',{y:16,opacity:0,duration:.7,ease:'power2.out',stagger:.08,delay:.5});
+  gsap.from('.hero-tag,.hero-ctas',{y:16,opacity:0,duration:.7,ease:'power2.out',stagger:.08,delay:.5});
   gsap.from('.shot',{y:60,opacity:0,duration:1,ease:'power3.out',stagger:.04,delay:.6});
   /* each case card shrinks and dims a little as the next one slides over it */
   const cards=gsap.utils.toArray('.case');
