@@ -690,32 +690,32 @@ $('#yr').textContent=new Date().getFullYear();
 /* ---------- data (from the case studies) ---------- */
 const CASES=[
  {id:'fnb',ind:'FinTech',bg:'var(--t3)',img:'fnb.webp',title:'Selling a car, built on trust',sum:'Owners photograph their car, get a sensor-based diagnostic report and list it for sale in the FNB app. Licence renewal moved into the app too.',meta:[['Client','FNB × Car Scan'],['Platform','iOS & Android']],
-  role:'Senior Product Designer',status:'Live',team:'7 designers, 4 CX, 4 devs',
+  role:'Senior Product Designer',status:'Live',
   problem:'Selling a car depends on trust. Buyers can’t easily judge a vehicle’s condition from a listing, and sellers struggle to present their car well. Renewing a vehicle licence usually means a trip to a government office and a long line.',
-  approach:'Owners capture high-quality photos and list their vehicle on FNB’s platform, while sensor data generates a real-time diagnostic report so issues surface before listing. Licence renewal moved into the app: documents, payment and notifications. I did the research and design for the listing and photo-capture flows, and ran the A/B test of three listing layouts with another designer.',
+  approach:'Owners capture high-quality photos and list their vehicle on FNB’s platform, while sensor data generates a real-time diagnostic report so issues surface before listing. Licence renewal moved into the app: documents, payment and notifications. I researched and designed the listing and photo-capture flows, and A/B tested three listing layouts.',
   result:'Live in the FNB app. After A/B and usability testing it was rolled out to customers, who can photograph their car, get a diagnostic report and list it for sale in one flow.',stat:['~700k','cars in FNB’s digital garage · WesBank, Dec 2024']},
  {id:'discovery',ind:'Health',bg:'var(--t1)',img:'discovery.webp',title:'A clearer Vitality, on every screen',sum:'The Vitality website redesigned as part of a wider rebrand, so people understand the products on desktop and mobile.',meta:[['Client','Discovery'],['Platform','Web & mobile']],
   role:'UX/UI Designer',status:'Delivered',
   problem:'Vitality was rebranding and wanted a website that was easier to use and more visually engaging, so people could understand its products.',
-  approach:'I was part of the design team that redesigned the Vitality pages for desktop and mobile.',
+  approach:'I redesigned Vitality pages for desktop and mobile as part of the rebrand.',
   result:'Redesigned desktop and mobile pages delivered as part of the Vitality rebrand, with products presented more clearly on every screen size.'},
  {id:'capitec',ind:'Banking',bg:'var(--t4)',img:'capitec.webp',title:'Banker chats, moved somewhere safe',sum:'W.A.R.M brings relationship managers’ WhatsApp conversations into a secure, bank-owned app where every request can be closed, referred or escalated.',meta:[['Client','Capitec'],['Platform','PWA & mobile']],
-  role:'UX/UI Designer',status:'Delivered',team:'Sole designer',
+  role:'UX/UI Designer',status:'Delivered',
   problem:'Transactional bankers and relationship managers were talking on WhatsApp, often from personal accounts or separate bank phones. With no oversight, communication was fragmented and nobody was accountable.',
   approach:'WhatsApp for Relationship Managers (W.A.R.M) brings those conversations into a secure, bank-owned app where managers can close, refer or escalate each request quickly.',
   result:'Banker requests moved off personal WhatsApp into one secure channel, giving Capitec oversight of every conversation and a clear owner for each request.'},
  {id:'huawei',ind:'Mining tech',bg:'var(--t2)',img:'huawei.webp',title:'Knowing where everyone is, when it matters',sum:'Real-time tracking of people and vehicles on mine sites, with last known location, contact history and time in each zone.',meta:[['Client','Huawei'],['Platform','Web & mobile']],
-  role:'UX/UI Designer',status:'Delivered',team:'Sole designer',
+  role:'UX/UI Designer',status:'Delivered',
   problem:'Mine site managers couldn’t reliably see where miners were during the day. After a cave-in or vehicle collision, there was often no clear last known location, slowing emergency response.',
   approach:'I designed a monitoring system that tracks personnel and vehicles in real time, showing last known location, contact history for COVID-19 protocols and time spent in each zone of the mine.',
   result:'Managers gained real-time visibility of every person and vehicle on site, supporting faster emergency response.'},
  {id:'absa',ind:'Compliance',bg:'var(--t5)',img:'absa.webp',title:'Tax reporting without the spreadsheets',sum:'A desktop tool that automates FATCA and CRS reporting, so operators classify client data quickly and accurately.',meta:[['Client','ABSA'],['Platform','Desktop']],
-  role:'UX/UI Designer',status:'Delivered',team:'Sole designer',
+  role:'UX/UI Designer',status:'Delivered',
   problem:'Identifying, remediating and classifying client data for FATCA and CRS tax reports was manual and error-prone.',
-  approach:'We designed a desktop tool that automates identification, remediation and classification, with simplified workflows and clear, UI-driven classification.',
+  approach:'I designed a desktop tool that automates identification, remediation and classification, with simplified workflows and clear, UI-driven classification.',
   result:'Operators identify, remediate and classify client data in one place, with reporting that stays compliant.'},
  {id:'vikela',ind:'Security',bg:'var(--t6)',img:'vikelaportal.webp',title:'Every smart safe, one portal',sum:'Businesses customise settings, watch live activity, manage devices, print receipts and track cash counts in one place.',meta:[['Client','Vikela Tech'],['Platform','Web & mobile']],
-  role:'UX/UI Designer',status:'Delivered',team:'Two designers',
+  role:'UX/UI Designer',status:'Delivered',
   problem:'Businesses needed one place to run their smart safes: customise settings, monitor activity, add or remove devices, print receipts and track deposited bills.',
   approach:'I designed a centralised portal covering each of these tasks, documented with annotated wireframes and specs so design intent carried through to build.',
   result:'One accessible portal for every smart safe task, handed over with annotated specs so the build matched the design.'}
@@ -745,7 +745,7 @@ $('#stack').innerHTML=CASES.map((c,i)=>`<article class="case" style="--i:${i};--
 
 /* case drawer: focus stays inside while open; each case has its own link (#case-fnb …) and Back closes it */
 const drawer=$('#drawer'),panel=drawer.querySelector('.panel');let lastFocus=null,openedByClick=false;
-function renderCase(c){const meta=[['Client',c.meta[0][1]],['Role',c.role],['Platform',c.meta[1][1]],['Status',c.status]].concat(c.team?[['Team',c.team]]:[]);
+function renderCase(c){const meta=[['Client',c.meta[0][1]],['Role',c.role],['Platform',c.meta[1][1]],['Status',c.status]];
   $('#dBody').innerHTML=`<button class="x" type="button" data-close aria-label="Close case study"><svg><use href="#i-x"/></svg></button>
     <span class="ind">${c.ind}</span><h3 id="dTitle">${c.title}</h3><p class="lead">${c.sum}</p>
     <figure><img src="img/${c.img}" alt="${c.meta[0][1]} project mockup"></figure>
