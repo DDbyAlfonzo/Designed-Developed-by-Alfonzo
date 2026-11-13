@@ -105,7 +105,7 @@ em.s{font-family:var(--serif);font-style:italic;font-weight:700;letter-spacing:-
 /* ---------- stacked case cards ---------- */
 .cases{padding-top:clamp(40px,5vw,60px)}
 .stack{display:grid;gap:28px;padding-bottom:20px}
-.case{position:sticky;top:calc(24px + env(safe-area-inset-top,0px) + var(--i)*28px);display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(20px,3vw,48px);padding:clamp(22px,3vw,40px);border-radius:24px;background:var(--bg);min-height:440px;transform-origin:50% 0;box-shadow:0 -1px 0 rgba(0,0,0,.04),0 18px 40px rgba(40,10,8,.08)}
+.case{position:sticky;top:calc(var(--stack-top) + env(safe-area-inset-top,0px) + var(--i)*var(--step));display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(20px,3vw,48px);padding:clamp(22px,3vw,40px);border-radius:24px;background:var(--bg);min-height:440px;transform-origin:50% 0;box-shadow:0 -1px 0 rgba(0,0,0,.04),0 18px 40px rgba(40,10,8,.08)}
 .case .txt{display:flex;flex-direction:column;gap:14px;min-width:0}
 .case .ind{font:700 italic 22px/1 var(--serif)}
 .case h3{font:700 clamp(26px,3vw,40px)/1.12 var(--sans)}
@@ -327,7 +327,12 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
 .reqnote{font-size:14px;color:#B6ABAA}
 .svc a,.contact .li{min-height:44px}
 .dock a{min-height:44px;display:inline-flex;align-items:center}
-@media (max-height:820px) and (min-width:961px){.case{position:relative;top:auto}}
+/* stacked cards: each new card slides over the last, leaving the previous card's industry label showing (as on the reference) */
+.stack{--stack-top:24px;--step:56px;padding-bottom:12vh}
+.case{height:min(470px,calc(100vh - 150px - var(--i)*var(--step)));min-height:0;overflow:hidden}
+.case .txt{min-height:0}
+.case figure{min-height:0;height:100%}
+@media (max-height:860px) and (min-width:961px){.stack{--step:44px}.case p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}
 @media (max-width:600px){.dock a{padding:0 10px}.dock .talk{padding:0 14px}}
 
 
@@ -356,8 +361,13 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
 
 /* ---------- responsive ---------- */
 @media (max-width:960px){
-  .case{grid-template-columns:1fr;min-height:0;position:relative;top:auto}
-  .case figure{min-height:220px;aspect-ratio:16/10;order:-1}
+  .stack{--stack-top:12px;--step:46px;gap:18px}
+  .case{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);height:min(620px,calc(100svh - 96px - var(--i)*var(--step)));gap:14px}
+  .case dl{display:none}
+  .case p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:15.5px}
+  .case h3{font-size:clamp(22px,6vw,28px)}
+  .case .txt{gap:10px}
+  .case figure{height:100%;min-height:0;aspect-ratio:auto;border-radius:14px}
   .phases{grid-template-columns:1fr 1fr}
   .wires{display:none}
   .svc{grid-template-columns:1fr}
@@ -822,7 +832,7 @@ if(window.gsap&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
   gsap.from('.shot',{y:60,opacity:0,duration:1,ease:'power3.out',stagger:.04,delay:.6});
   /* each case card shrinks and dims a little as the next one slides over it */
   const cards=gsap.utils.toArray('.case');
-  if(matchMedia('(min-width:961px) and (min-height:821px)').matches)cards.forEach((c,i)=>{const next=cards[i+1];if(!next)return;
+  cards.forEach((c,i)=>{const next=cards[i+1];if(!next)return;
     gsap.to(c,{scale:.94,ease:'none',scrollTrigger:{trigger:next,start:'top bottom',end:()=>'top '+(parseFloat(getComputedStyle(next).top)||0),scrub:true}})});
 }
 </script>
