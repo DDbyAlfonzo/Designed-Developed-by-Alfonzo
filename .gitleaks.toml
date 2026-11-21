@@ -1,0 +1,33 @@
+# Secret scan rules. Gitleaks' built-in rules plus the cases they miss.
+title = "DDbyAlfonzo secret scan"
+
+[extend]
+useDefault = true
+
+# Google / Gmail app passwords: four groups of four lowercase letters.
+[[rules]]
+id = "gmail-app-password"
+description = "Google app password assigned in code or config"
+regex = '''(?i)(?:pass(?:word)?|pwd|secret|app_?pass)\w*['"]?\s*(?:=>|=|:)\s*['"](?-i:([a-z]{4} [a-z]{4} [a-z]{4} [a-z]{4}|[a-z]{16}))['"]'''
+keywords = ["pass", "pwd", "secret"]
+
+# Any password typed straight into code, e.g. $mail->Password = '...'; or password: "..."
+[[rules]]
+id = "hardcoded-password"
+description = "Password written directly in code or config"
+regex = '''(?i)\b(?:smtp_?|mail_?|email_?|db_?|admin_?)?pass(?:word|wd)?\b['"]?\s*(?:=>|=|:)\s*['"]([^'"\s$]{8,})['"]'''
+entropy = 2.5
+keywords = ["pass"]
+[rules.allowlist]
+regexTarget = "match"
+regexes = ['''(?i)your|example|placeholder|changeme|change-me|xxxx|\.\.\.|<|\{\{|process\.env|password123|secret123|test|dummy|sample''']
+
+[allowlist]
+description = "Build output and lockfiles"
+paths = [
+  '''(^|/)\.next/''',
+  '''(^|/)out/''',
+  '''(^|/)node_modules/''',
+  '''(^|/)package-lock\.json$''',
+  '''(^|/)\.firebase/''',
+]

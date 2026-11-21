@@ -1,0 +1,3 @@
+# Known findings already dealt with. Add a line here only after the secret has been revoked.
+# Gmail app password in the old PHP mailer, removed and revoked 2026-11-21
+a46c4c7ab7aed783172a58b65c32f3b6e4a54484:sendmail php/sendemail.php:gmail-app-password:54
