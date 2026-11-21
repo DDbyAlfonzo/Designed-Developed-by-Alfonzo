@@ -230,15 +230,10 @@ form{display:grid;gap:22px;min-width:0}
 .field label,.field legend{font:700 16px/1 var(--sans);color:#fff;padding:0}
 fieldset{border:0;margin:0;padding:0;display:grid;gap:12px}
 .field input,.field textarea{width:100%;background:transparent;border:0;border-bottom:1px solid #4A3E3F;padding:10px 0;font:500 17px/1.4 var(--sans);color:#fff;border-radius:0}
-.field textarea{min-height:110px;resize:vertical}
+.field textarea{min-height:150px;resize:vertical;line-height:1.5}
+.field{scroll-margin-block:96px 140px}
 .field input::placeholder,.field textarea::placeholder{color:#7F7374}
 .field input:focus,.field textarea:focus{outline:none;border-bottom-color:var(--red-hi)}
-.opts{display:flex;flex-wrap:wrap;gap:10px}
-.opts label{position:relative;cursor:pointer}
-.opts input{position:absolute;opacity:0;pointer-events:none}
-.opts span{display:inline-block;padding:12px 16px;border-radius:10px;border:1px solid #4A3E3F;font:600 15px/1 var(--sans);color:#D9CFCE;transition:background .2s,border-color .2s,color .2s}
-.opts input:checked+span{background:var(--red);border-color:var(--red);color:#fff}
-.opts input:focus-visible+span{outline:2px solid var(--red-hi);outline-offset:2px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .fstat{min-height:1.4em;font-weight:600;color:#FFB4AE}
 .strip{margin-top:16px;display:flex;align-items:center;gap:16px;padding:12px 20px;border-radius:999px;background:linear-gradient(90deg,#FFD9D4,#FFF1EE);overflow:hidden}
@@ -261,6 +256,9 @@ footer::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-30%;heig
 
 /* ---------- dock + back to top ---------- */
 .dock{position:fixed;z-index:50;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:18px;background:rgba(11,10,10,.88);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(208,36,28,.4);box-shadow:0 18px 40px rgba(0,0,0,.35);max-width:calc(100vw - 2 * max(16px,env(safe-area-inset-left,0px)))}
+.dock{transition:transform .4s var(--e),opacity .3s}
+.dock.away{transform:translate(-50%,calc(100% + 32px));opacity:0;pointer-events:none}
+.totop.away{opacity:0;pointer-events:none}
 .dock a{padding:12px 18px;border-radius:12px;color:#E9DFDE;text-decoration:none;font:600 15px/1 var(--sans);white-space:nowrap;transition:background .2s,color .2s}
 .dock a:hover{background:rgba(255,255,255,.07);color:#fff}
 .dock a.on{color:#fff;background:rgba(255,255,255,.08)}
@@ -632,16 +630,7 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
           <div class="field"><label for="fn">Full name <b class="req" aria-hidden="true">*</b></label><input id="fn" name="name" autocomplete="name" placeholder="Your name" required aria-describedby="fn-e"><span class="err" id="fn-e"></span></div>
           <div class="field"><label for="em">Your email <b class="req" aria-hidden="true">*</b></label><input id="em" name="email" type="email" autocomplete="email" placeholder="you@company.co.za" required aria-describedby="em-e"><span class="err" id="em-e"></span></div>
         </div>
-        <fieldset class="field"><legend>What do you need?</legend>
-          <div class="opts">
-            <label><input type="radio" name="package" value="Website" id="o2"><span>Website</span></label>
-            <label><input type="radio" name="package" value="Product design" id="o1"><span>Product design</span></label>
-            <label><input type="radio" name="package" value="Brand identity" id="o3"><span>Brand identity</span></label>
-            <label><input type="radio" name="package" value="Other design work" id="o4"><span>Other design work</span></label>
-            <label><input type="radio" name="package" value="Not sure yet" id="o5"><span>Not sure yet</span></label>
-          </div>
-        </fieldset>
-        <div class="field"><label for="msg">Project details <b class="req" aria-hidden="true">*</b></label><textarea id="msg" name="message" placeholder="Tell me about your business and what you'd like to build" required aria-describedby="msg-e"></textarea><span class="err" id="msg-e"></span></div>
+        <div class="field"><label for="msg">What do you need? <b class="req" aria-hidden="true">*</b></label><textarea id="msg" name="message" rows="5" placeholder="Tell me about your business and what you'd like to build: a website, an app, a brand or something else" required aria-describedby="msg-e"></textarea><span class="err" id="msg-e"></span></div>
         <div class="hp" aria-hidden="true"><label for="hp_c">Company website</label><input id="hp_c" name="_gotcha" tabindex="-1" autocomplete="off"></div>
         <p class="consent">By sending this form you agree to the <a href="privacy.html">privacy notice</a>. Your message is delivered to my inbox through Formspree.</p>
         <div class="sendrow"><button class="btn" type="submit">Send message <svg><use href="#i-arrow"/></svg></button><span class="reqnote"><b class="req">*</b> Required</span></div>
@@ -787,12 +776,13 @@ if(reduce){document.documentElement.classList.add('still');pm.hidden=true}
 const mv=$('#motionVid');if(mv&&'IntersectionObserver' in window&&!reduce){new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting&&!document.documentElement.classList.contains('still')){mv.preload='auto';mv.play().catch(()=>{})}else mv.pause()}),{threshold:.3}).observe(mv)}
 
 /* packages prefill the form */
-$$('[data-pkg]').forEach(a=>a.addEventListener('click',()=>{const m={'Brand identity':'o3','Website':'o2','Product design':'o1'};const r=document.getElementById(m[a.dataset.pkg]);if(r)r.checked=true}));
+let chosenPkg='';
+$$('[data-pkg]').forEach(a=>a.addEventListener('click',()=>{chosenPkg=a.dataset.pkg;const m=$('#msg');if(!m.value.trim())m.value=`Hi Alfonzo, I'd like to start a ${chosenPkg.toLowerCase()} project. `}));
 
 /* contact form → Formspree (same form as the current site, delivers to the studio inbox) */
 const FORM_ENDPOINT='https://formspree.io/f/mqewzllv';
 $('#form').addEventListener('submit',e=>{e.preventDefault();const f=e.target,st=$('#fstat');
-  const name=$('#fn').value.trim(),email=$('#em').value.trim(),msg=$('#msg').value.trim(),pkg=(f.querySelector('[name=package]:checked')||{}).value||'';
+  const name=$('#fn').value.trim(),email=$('#em').value.trim(),msg=$('#msg').value.trim(),pkg=chosenPkg;
   const errs={fn:!name&&'Add your name.',em:!/^\S+@\S+\.\S+$/.test(email)&&'Add an email like you@company.co.za.',msg:!msg&&'Tell me a little about the project.'};
   let first=null;Object.entries(errs).forEach(([id,m])=>{const i=document.getElementById(id);i.setAttribute('aria-invalid',m?'true':'false');document.getElementById(id+'-e').textContent=m||'';if(m&&!first)first=i});
   if(first){st.textContent='';first.focus();return}
@@ -800,9 +790,17 @@ $('#form').addEventListener('submit',e=>{e.preventDefault();const f=e.target,st=
   const sb=f.querySelector('[type=submit]');if(sb.disabled)return;sb.disabled=true;
   st.textContent='Sending…';
   fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name,email,package:pkg,message:msg,_subject:`New enquiry from ${name}${pkg?' · '+pkg:''}`,_replyto:email})})
-   .then(r=>{if(!r.ok)throw 0;st.textContent='Sent. I’ll reply within one working day.';f.reset()})
+   .then(r=>{if(!r.ok)throw 0;st.textContent='Sent. I’ll reply within one working day.';f.reset();chosenPkg=''})
    .catch(()=>{st.textContent='That didn’t go through. Please try again in a minute.'})
    .finally(()=>{sb.disabled=false})});
+
+['fn','em','msg'].forEach(id=>$('#'+id).addEventListener('input',e=>{if(e.target.getAttribute('aria-invalid')==='true'){e.target.setAttribute('aria-invalid','false');$('#'+id+'-e').textContent=''}}));
+
+/* the dock steps aside while the contact form is on screen or being typed in, so it never sits over a field or catches a tap meant for the form */
+const dock=$('.dock'),form=$('#form');let formSeen=false,formFocus=false;
+const setAway=()=>{const a=formSeen||formFocus;dock.classList.toggle('away',a);dock.inert=a;$('#totop').classList.toggle('away',a)};
+if('IntersectionObserver' in window)new IntersectionObserver(es=>{formSeen=es[0].isIntersecting;setAway()},{rootMargin:'0px 0px -60px 0px'}).observe(form);
+form.addEventListener('focusin',()=>{formFocus=true;setAway()});form.addEventListener('focusout',e=>{formFocus=form.contains(e.relatedTarget);setAway()});
 
 /* dock state + back to top */
 const secs=['work','services','packages','faq'].map(id=>document.getElementById(id));
