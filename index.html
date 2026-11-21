@@ -238,6 +238,7 @@ fieldset{border:0;margin:0;padding:0;display:grid;gap:12px}
 .fstat{min-height:1.4em;font-weight:600;color:#FFB4AE}
 .strip{margin-top:16px;display:flex;align-items:center;gap:16px;padding:12px 20px;border-radius:999px;background:linear-gradient(90deg,#FFD9D4,#FFF1EE);overflow:hidden}
 .strip img{width:40px;flex:none}
+.strip-track{flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 28px),transparent)}
 .strip .ticker-row{font:600 clamp(16px,1.6vw,20px)/1 var(--sans);animation-duration:30s;gap:28px}
 
 /* ---------- footer ---------- */
@@ -637,7 +638,7 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
         <p class="fstat" id="fstat" role="status"></p>
       </form>
     </div>
-    <div class="strip" aria-hidden="true"><img src="img/logo.webp" alt=""><div class="ticker-row" id="tick2"></div></div>
+    <div class="strip" aria-hidden="true"><img src="img/logo.webp" alt=""><div class="strip-track"><div class="ticker-row" id="tick2"></div></div></div>
   </section>
 </main>
 
