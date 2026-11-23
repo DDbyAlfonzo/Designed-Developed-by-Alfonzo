@@ -133,6 +133,7 @@ em.s{font-family:var(--serif);font-style:italic;font-weight:700;letter-spacing:-
 .wires path{fill:none;stroke:#7A2A24;stroke-width:1.5}
 .wires .flow{stroke:var(--red-hi);stroke-width:2;stroke-dasharray:14 120;animation:flow 2.6s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-134}}
+@keyframes trunk{from{background-position:0 100%,0 0}to{background-position:0 0,0 0}}
 .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1040px;margin:0 auto}
 .phase{padding:22px 20px;border-radius:18px;background:linear-gradient(180deg,#1A1516,#120F10);border:1px solid #2A2324;display:flex;flex-direction:column;gap:12px;min-width:0}
 .phase h3{font:700 22px/1.1 var(--sans);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
@@ -312,7 +313,7 @@ footer::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-30%;heig
 .pause{display:flex;margin:14px auto 0;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font:600 14px/1 var(--sans);cursor:pointer}
 .pause svg{width:14px;height:14px}
 .pause:hover{color:var(--text)}
-html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .wires .flow{animation-play-state:paused!important}
+html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .wires .flow,html.still .phase::before{animation-play-state:paused!important}
 .logos:hover .logo-row,.ticker:hover .ticker-row,.strip:hover .ticker-row,.logos:focus-within .logo-row{animation-play-state:paused}
 .qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
 .q{margin:0;padding:26px;border-radius:22px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:18px}
@@ -367,8 +368,18 @@ html.still .shots-track,html.still .logo-row,html.still .ticker-row,html.still .
   .case h3{font-size:clamp(22px,6vw,28px)}
   .case .txt{gap:10px}
   .case figure{height:100%;min-height:0;aspect-ratio:auto;border-radius:14px}
-  .phases{grid-template-columns:1fr 1fr}
+  /* process map on smaller screens: badge top-left, a trunk down the side, a rounded branch into each card */
   .wires{display:none}
+  .hub{width:64px;height:64px;margin:30px 0 0 max(0px,calc((100% - 640px)/2));box-shadow:0 0 0 7px rgba(208,36,28,.07),0 0 48px rgba(208,36,28,.45)}
+  .hub img{width:36px}
+  .phases{--gap:18px;--x:-25px;--y:34px;grid-template-columns:1fr;gap:var(--gap);max-width:640px;margin-top:var(--gap);padding-left:56px}
+  .phase{position:relative}
+  .js .phase.rv.pre{transform:none} /* fade only, so the trunk pieces never drift apart */
+  .phase::before,.phase::after{content:"";position:absolute;pointer-events:none}
+  .phase::before{left:var(--x);top:calc(var(--gap)*-1);bottom:0;width:2px;background:linear-gradient(180deg,transparent 0 40%,var(--red-hi) 50%,transparent 60% 100%) 0 0/100% 300% no-repeat,#7A2A24;animation:trunk 2.6s linear infinite}
+  .phase:last-child::before{bottom:auto;height:calc(var(--gap) + var(--y) - 12px)}
+  .phase::after{left:var(--x);top:calc(var(--y) - 12px);width:25px;height:12px;border:2px solid #7A2A24;border-top:0;border-right:0;border-bottom-left-radius:12px}
+  .phase:nth-child(2)::before{animation-delay:-.65s}.phase:nth-child(3)::before{animation-delay:-1.3s}.phase:nth-child(4)::before{animation-delay:-1.95s}
   .svc{grid-template-columns:1fr}
   .svc .txt{position:static}
   .bento{grid-template-columns:1fr 1fr}
